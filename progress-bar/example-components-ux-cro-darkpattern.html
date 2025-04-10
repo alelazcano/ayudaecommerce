@@ -1,0 +1,422 @@
+<!--
+Explicación de los Patrones Oscuros
+AVISO DE ÉTICA: ejemplos que NO se recomienda usar, ya que manipulan al usuario
+
+1. Costos Ocultos hasta el Checkout
+Táctica: Mostrar un precio atractivo inicial pero añadir cargos obligatorios (envío, seguros, etc.) solo al final del proceso de compra.
+Por qué es malo: Engaña al usuario sobre el precio real, generando frustración y pérdida de confianza.
+
+2. Suscripción Escondida
+Táctica: Convertir una compra única en suscripción recurrente mediante opciones preseleccionadas o lenguaje confuso.
+Por qué es malo: Los usuarios pueden no darse cuenta que están suscribiéndose a pagos recurrentes.
+
+3. Doble Negación en Opciones
+Táctica: Usar formularios con preguntas negativas ("¿No quieres X?") donde la opción por defecto beneficia al negocio.
+Por qué es malo: Confunde al usuario haciendo que seleccione lo contrario a su intención real.
+
+4. Contador de Tiempo Engañoso
+Táctica: Mostrar contadores que se reinician por usuario o stock "limitado" que no es real.
+Por qué es malo: Crea falsa urgencia para presionar una decisión rápida.
+
+5. Eliminación Difícil de Items
+Táctica: Hacer más difícil quitar productos añadidos automáticamente (como extras) que añadirlos.
+Por qué es malo: Los usuarios pueden terminar comprando cosas que no querían por la dificultad para eliminarlas.
+
+6. Configuración de Privacidad Engañosa
+Táctica: Diseñar interfaces donde aceptar todo el seguimiento sea la opción más fácil.
+Por qué es malo: Viola normativas de privacidad y engaña sobre el control real de datos.
+
+7. Descuento con Condiciones Ocultas
+Táctica: Ofertas con letra pequeña que las hace inalcanzables (ej: "50% descuento" pero solo en productos no disponibles).
+Por qué es malo: Atrae usuarios con promesas que no se pueden cumplir.
+
+8. Botones que Hacen lo Contrario
+Táctica: Diseñar botones donde la acción menos deseada (para el usuario) sea la más prominente.
+Por qué es malo: Manipula al usuario para que tome decisiones contra sus intereses.
+
+IMPORTANTE: los ejemplos pueden copiarse individualmente y reutilizar en otros proyectos con pequeños cambios.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patrones Oscuros en Ecommerce - Lo que NO hacer</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.5;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .dark-pattern {
+            margin: 30px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #ff5252;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            color: #d32f2f;
+            margin-top: 0;
+        }
+        
+        .pattern-type {
+            display: inline-block;
+            background: #ffebee;
+            color: #d32f2f;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .example {
+            background: #fff5f5;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .example::before {
+            content: "EJEMPLO NO ÉTICO";
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: #d32f2f;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .why-bad {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        .why-bad strong {
+            color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <h1>Patrones Oscuros en Ecommerce - Lo que NO hacer</h1>
+    <p>Ejemplos de tácticas engañosas que manipulan al usuario (para mostrar como anti-patrones)</p>
+    
+    <!-- 1. Precio oculto hasta el final -->
+    <div class="dark-pattern">
+        <span class="pattern-type">Ocultamiento forzado</span>
+        <h2>1. Costos Ocultos hasta el Checkout</h2>
+        <p>Mostrar un precio atractivo pero añadir cargos obligatorios solo al final del proceso.</p>
+        
+        <div class="example">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <div style="font-size: 24px; font-weight: bold;">$99</div>
+                    <div style="font-size: 14px;">Smartphone Premium</div>
+                </div>
+                <button style="background: #4CAF50; color: white; border: none; padding: 8px 16px; border-radius: 4px;">
+                    Comprar ahora
+                </button>
+            </div>
+            
+            <div style="margin-top: 20px; font-size: 13px; color: #666;">
+                <p><strong>En el checkout (después de iniciar compra):</strong></p>
+                <ul>
+                    <li>Costo de envío: +$25</li>
+                    <li>Seguro obligatorio: +$15</li>
+                    <li>Total real: $139</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="why-bad">
+            <strong>Por qué es malo:</strong> Engaña al usuario mostrando un precio inferior al real. Viola el principio de transparencia y puede generar frustración y abandono del carrito.
+        </div>
+    </div>
+    
+    <!-- 2. Suscripción oculta -->
+    <div class="dark-pattern">
+        <span class="pattern-type">Acción encubierta</span>
+        <h2>2. Suscripción Escondida en Compra</h2>
+        <p>Convertir una compra única en suscripción recurrente sin consentimiento claro.</p>
+        
+        <div class="example">
+            <div style="border: 1px solid #ddd; padding: 15px; border-radius: 4px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <div>
+                        <div style="font-weight: bold;">Servicio Premium</div>
+                        <div style="font-size: 14px; color: #666;">Acceso por 30 días</div>
+                    </div>
+                    <div style="font-weight: bold;">$9.99</div>
+                </div>
+                
+                <div style="font-size: 13px; color: #666; margin-bottom: 15px;">
+                    <label style="display: flex; align-items: center;">
+                        <input type="checkbox" checked style="margin-right: 8px;">
+                        <span>¡Ahorra 10%! Recibir servicio automáticamente cada mes (puedes cancelar cuando quieras)</span>
+                    </label>
+                </div>
+                
+                <button style="width: 100%; background: #4CAF50; color: white; border: none; padding: 10px; border-radius: 4px;">
+                    Confirmar compra
+                </button>
+            </div>
+            
+            <div style="font-size: 12px; color: #999; margin-top: 10px; text-align: center;">
+                * Al continuar aceptas los Términos que incluyen renovación automática
+            </div>
+        </div>
+        
+        <div class="why-bad">
+            <strong>Por qué es malo:</strong> El usuario cree que está haciendo una compra única pero en realidad está suscribiéndose a un pago recurrente. El checkbox viene preseleccionado y el lenguaje es engañoso.
+        </div>
+    </div>
+    
+    <!-- 3. Confirmación forzada -->
+    <div class="dark-pattern">
+        <span class="pattern-type">Confirmación forzada</span>
+        <h2>3. Doble Negación en Opciones</h2>
+        <p>Usar lenguaje confuso para que el usuario haga lo contrario a lo que quiere.</p>
+        
+        <div class="example">
+            <div style="background: #f5f5f5; padding: 15px; border-radius: 4px;">
+                <h3 style="margin-top: 0;">¿No quieres recibir nuestras increíbles ofertas?</h3>
+                
+                <div style="margin: 15px 0;">
+                    <label style="display: block; margin-bottom: 10px;">
+                        <input type="radio" name="marketing" checked> 
+                        <span>No, no quiero ahorrar dinero (no recibir ofertas)</span>
+                    </label>
+                    <label style="display: block;">
+                        <input type="radio" name="marketing"> 
+                        <span>Sí, quiero ahorrar con ofertas exclusivas</span>
+                    </label>
+                </div>
+                
+                <button style="background: #2196F3; color: white; border: none; padding: 8px 16px; border-radius: 4px;">
+                    Guardar preferencias
+                </button>
+            </div>
+        </div>
+        
+        <div class="why-bad">
+            <strong>Por qué es malo:</strong> Usa doble negación y lenguaje emocional para manipular. La opción por defecto es la que beneficia al negocio, no al usuario.
+        </div>
+    </div>
+    
+    <!-- 4. Urgencia falsa -->
+    <div class="dark-pattern">
+        <span class="pattern-type">Urgencia falsa</span>
+        <h2>4. Contador de Tiempo Engañoso</h2>
+        <p>Mostrar falsa urgencia con contadores que no son reales.</p>
+        
+        <div class="example">
+            <div style="background: #fff8e1; padding: 15px; border-radius: 4px; text-align: center;">
+                <div style="font-size: 18px; font-weight: bold; color: #e65100;">
+                    ¡Oferta termina en <span id="fake-timer">05:23</span>!
+                </div>
+                <div style="margin-top: 10px;">
+                    <span style="background: #e65100; color: white; padding: 3px 8px; border-radius: 4px;">
+                        3 personas están viendo este producto
+                    </span>
+                </div>
+                <div style="font-size: 13px; margin-top: 10px;">
+                    Solo 2 disponibles a este precio
+                </div>
+            </div>
+        </div>
+        
+        <div class="why-bad">
+            <strong>Por qué es malo:</strong> El contador se reinicia para cada usuario, las "personas viendo" son generadas aleatoriamente y el stock no es real. Crea presión artificial para decidir rápido.
+        </div>
+    </div>
+    
+    <!-- 5. Carrito persistente -->
+    <div class="dark-pattern">
+        <span class="pattern-type">Inercia forzada</span>
+        <h2>5. Eliminación Difícil de Items</h2>
+        <p>Hacer que sea más difícil quitar items que añadirlos al carrito.</p>
+        
+        <div class="example">
+            <div style="border: 1px solid #ddd; padding: 15px; border-radius: 4px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                    <div>
+                        <div style="font-weight: bold;">Producto Extra</div>
+                        <div style="font-size: 14px; color: #666;">Solo $9.99 más</div>
+                    </div>
+                    <div>
+                        <button style="background: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 4px; font-size: 12px;">
+                            ¿Eliminar? [X]
+                        </button>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-weight: bold;">Producto Principal</div>
+                        <div style="font-size: 14px; color: #666;">$49.99</div>
+                    </div>
+                    <div>
+                        <button style="background: #4CAF50; color: white; border: none; padding: 5px 15px; border-radius: 4px;">
+                            +
+                        </button>
+                        <span style="margin: 0 10px;">1</span>
+                        <button style="background: #4CAF50; color: white; border: none; padding: 5px 15px; border-radius: 4px;">
+                            -
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="why-bad">
+            <strong>Por qué es malo:</strong> El producto extra añadido automáticamente tiene un botón de eliminación poco claro y diferente al control normal de cantidad. Los usuarios pueden no darse cuenta o sentirse obligados a aceptarlo.
+        </div>
+    </div>
+    
+    <!-- 6. Privacidad engañosa -->
+    <div class="dark-pattern">
+        <span class="pattern-type">Consentimiento oscuro</span>
+        <h2>6. Configuración de Privacidad Engañosa</h2>
+        <p>Oscurecer las opciones para rechazar el seguimiento.</p>
+        
+        <div class="example">
+            <div style="background: #f5f5f5; padding: 15px; border-radius: 4px;">
+                <h3 style="margin-top: 0;">Preferencias de Privacidad</h3>
+                <p style="font-size: 14px;">Queremos mejorar tu experiencia. Por favor elige tus preferencias:</p>
+                
+                <div style="background: white; padding: 15px; border-radius: 4px; margin: 15px 0;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <div>
+                            <div style="font-weight: bold;">Publicidad personalizada</div>
+                            <div style="font-size: 13px; color: #666;">Recibe ofertas relevantes para ti</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>
+                            <div style="font-weight: bold;">Compartir datos con socios</div>
+                            <div style="font-size: 13px; color: #666;">Mejores recomendaciones</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                    <button style="background: #9e9e9e; color: white; border: none; padding: 8px 16px; border-radius: 4px;">
+                        Configuración avanzada
+                    </button>
+                    <button style="background: #4CAF50; color: white; border: none; padding: 8px 16px; border-radius: 4px;">
+                        Aceptar todo
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="why-bad">
+            <strong>Por qué es malo:</strong> Todas las opciones vienen activadas por defecto, el botón para rechazar está desdibujado y la "configuración avanzada" es difícil de encontrar. Viola el GDPR y normativas de privacidad.
+        </div>
+    </div>
+    
+    <!-- 7. Descuento condicional imposible -->
+    <div class="dark-pattern">
+        <span class="pattern-type">Oferta engañosa</span>
+        <h2>7. Descuento con Condiciones Ocultas</h2>
+        <p>Promocionar descuentos que son imposibles de obtener.</p>
+        
+        <div class="example">
+            <div style="text-align: center; background: #e3f2fd; padding: 15px; border-radius: 4px;">
+                <div style="font-size: 24px; font-weight: bold; color: #0d47a1;">
+                    ¡50% DE DESCUENTO!
+                </div>
+                <div style="margin: 10px 0;">
+                    Usa el código <span style="background: white; padding: 2px 8px; border-radius: 4px; font-family: monospace;">MITADPRECIO</span>
+                </div>
+                <div style="font-size: 12px; color: #666;">
+                    * Válido solo para 2 productos seleccionados (no incluidos en esta página) al comprar 5 unidades de cada uno
+                </div>
+            </div>
+        </div>
+        
+        <div class="why-bad">
+            <strong>Por qué es malo:</strong> El descuento parece aplicable a toda la tienda pero en realidad tiene condiciones imposibles o muy restrictivas. Engaña al usuario para que visite el sitio.
+        </div>
+    </div>
+    
+    <!-- 8. Dirección inversa -->
+    <div class="dark-pattern">
+        <span class="pattern-type">Dirección engañosa</span>
+        <h2>8. Botones que Hacen lo Contrario</h2>
+        <p>Diseñar botones para que el usuario haga acciones no deseadas.</p>
+        
+        <div class="example">
+            <div style="background: #f5f5f5; padding: 15px; border-radius: 4px; text-align: center;">
+                <h3 style="margin-top: 0;">¿Seguro que quieres cancelar tu suscripción Premium?</h3>
+                <p style="font-size: 14px;">Perderás acceso a todas estas ventajas:</p>
+                <ul style="text-align: left; font-size: 14px;">
+                    <li>Acceso exclusivo</li>
+                    <li>Ofertas especiales</li>
+                    <li>Soporte prioritario</li>
+                </ul>
+                
+                <div style="display: flex; justify-content: center; gap: 15px; margin-top: 20px;">
+                    <button style="background: #9e9e9e; color: white; border: none; padding: 10px 20px; border-radius: 4px; font-weight: bold;">
+                        No, volver atrás
+                    </button>
+                    <button style="background: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 4px;">
+                        Sí, cancelar
+                    </button>
+                </div>
+                
+                <div style="font-size: 12px; color: #666; margin-top: 15px;">
+                    O mejor... <a href="#" style="color: #2196F3;">¿Quieres una oferta especial para quedarte?</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="why-bad">
+            <strong>Por qué es malo:</strong> El botón para cancelar está desdibujado mientras que la opción para permanecer es más prominente. Además añade presión emocional enumerando pérdidas y ofreciendo descuentos de último momento.
+        </div>
+    </div>
+
+    <script>
+        // Solo para simular el contador de tiempo engañoso
+        document.addEventListener('DOMContentLoaded', function() {
+            const timerElement = document.getElementById('fake-timer');
+            if (timerElement) {
+                let seconds = 5 * 60 + 23;
+                
+                setInterval(() => {
+                    seconds--;
+                    if (seconds < 0) seconds = 5 * 60 + 23; // Reinicia el contador
+                    
+                    const mins = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    timerElement.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
