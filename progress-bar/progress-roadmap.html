@@ -1,0 +1,755 @@
+<!--
+Casos de uso de los ejemplos y posibles aprovechamientos de cada uno
+
+1. Camino Logístico en Zigzag
+Uso: Seguimiento del proceso de envío (confirmación, preparación, envío, entrega)
+Destacado: Camino SVG en zigzag que se dibuja progresivamente
+Interacción: Los iconos de cada paso cambian al completarse
+Animación: Efecto de dibujado del camino con stroke-dashoffset
+
+2. Validación Circular de Pedido
+Uso: Proceso de validación de pedidos (pago, reserva, picking, packing)
+Destacado: Diagrama circular que se completa con porcentaje central
+Interacción: Pasos periféricos que se activan progresivamente
+Animación: Círculo que se rellena gradualmente
+
+3. Progreso de Delivery con Efecto Ola (se puede transformar en fuego con algunos cambios)
+Uso: Estado del delivery (preparación, recogida, en ruta, entrega)
+Destacado: Efecto de ola animado que sube según el progreso (recarga la web para verlo o ralentiza el progreso para verlo)
+Interacción: Marcadores que indican el paso actual
+Animación: Ondas SVG que simulan movimiento de agua
+
+4. Proceso de Fulfillment en Laberinto
+Uso: Proceso no lineal de fulfillment (pedido, pago, picking, packing, envío)
+Destacado: Diseño tipo laberinto con camino no convencional
+Interacción: Segmentos de progreso que conectan los pasos
+Animación: Transición suave entre segmentos del camino
+
+Cada componente está completamente autónomo, con estilos y JavaScript encapsulados, listo para copiar y usar con mínima adaptación. Las animaciones son fluidas y los diseños responsivos.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizadores de Progreso Creativos</title>
+    <style>
+        /* Estilos base */
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #2d3748;
+            background-color: #f8fafc;
+            line-height: 1.5;
+        }
+        
+        .component-container {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .component-title {
+            color: #1a365d;
+            margin-top: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            font-weight: 600;
+        }
+        
+        .component-description {
+            color: #4a5568;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Componente 1: Camino logístico en zigzag */
+        .zigzag-tracker {
+            position: relative;
+            margin: 2rem auto;
+            height: 300px;
+            max-width: 800px;
+        }
+        
+        .zigzag-path {
+            position: absolute;
+            top: 0;
+            left: 50px;
+            right: 50px;
+            height: 100%;
+            stroke: #cbd5e0;
+            stroke-width: 3;
+            fill: none;
+        }
+        
+        .zigzag-progress {
+            position: absolute;
+            top: 0;
+            left: 50px;
+            right: 50px;
+            height: 100%;
+            stroke: #4299e1;
+            stroke-width: 4;
+            fill: none;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            transition: stroke-dashoffset 1.5s ease-in-out;
+        }
+        
+        .zigzag-steps {
+            position: relative;
+            height: 100%;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .zigzag-step {
+            position: absolute;
+            width: 100px;
+            text-align: center;
+        }
+        
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            border: 3px solid #cbd5e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: bold;
+            color: #a0aec0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .zigzag-step.active .step-icon {
+            border-color: #4299e1;
+            color: #4299e1;
+            background-color: #ebf8ff;
+        }
+        
+        .zigzag-step.completed .step-icon {
+            border-color: #48bb78;
+            background-color: #48bb78;
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #718096;
+        }
+        
+        .zigzag-step.active .step-label,
+        .zigzag-step.completed .step-label {
+            color: #2d3748;
+            font-weight: 600;
+        }
+        
+        .step-time {
+            font-size: 0.75rem;
+            color: #a0aec0;
+            margin-top: 0.25rem;
+        }
+
+        /* Componente 2: Validación circular de pedido */
+        .circular-validation {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem auto;
+            max-width: 500px;
+        }
+        
+        .circular-track {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .circular-bg {
+            fill: none;
+            stroke: #e2e8f0;
+            stroke-width: 8;
+        }
+        
+        .circular-progress {
+            fill: none;
+            stroke: #4299e1;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke-dasharray: 628;
+            stroke-dashoffset: 628;
+            transition: stroke-dashoffset 1s ease-in-out;
+        }
+        
+        .circular-steps {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .validation-step {
+            text-align: center;
+            flex: 1;
+            padding: 0 0.5rem;
+        }
+        
+        .validation-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            color: #a0aec0;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+        
+        .validation-step.active .validation-badge {
+            background: #4299e1;
+            color: white;
+        }
+        
+        .validation-step.completed .validation-badge {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .validation-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #718096;
+        }
+        
+        .validation-step.active .validation-label,
+        .validation-step.completed .validation-label {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        /* Componente 3: Progreso de olas para delivery */
+        .wave-delivery {
+            margin: 2rem auto;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .wave-container {
+            height: 120px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            background: linear-gradient(to bottom, #ebf8ff, #bee3f8);
+        }
+        
+        .wave-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            background: linear-gradient(to bottom, #4299e1, #3182ce);
+            transition: height 1s ease-in-out;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" fill="%234299e1" opacity=".25"/><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" fill="%234299e1" opacity=".5"/><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%234299e1"/></svg>');
+            animation: wave 12s linear infinite;
+            opacity: 0.8;
+        }
+        
+        .wave:nth-child(2) {
+            animation-delay: 0.5s;
+            opacity: 0.5;
+        }
+        
+        .wave:nth-child(3) {
+            animation-delay: 1s;
+            opacity: 0.2;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .delivery-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        
+        .delivery-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+        
+        .delivery-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 1;
+        }
+        
+        .delivery-marker {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            margin: 0 auto 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .delivery-step.active .delivery-marker {
+            background: #4299e1;
+            box-shadow: 0 0 0 3px #ebf8ff;
+        }
+        
+        .delivery-step.completed .delivery-marker {
+            background: #48bb78;
+        }
+        
+        .delivery-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #718096;
+        }
+        
+        .delivery-step.active .delivery-label,
+        .delivery-step.completed .delivery-label {
+            color: #2d3748;
+            font-weight: 600;
+        }
+
+        /* Componente 4: Diagrama de pasos tipo laberinto */
+        .maze-process {
+            margin: 2rem auto;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .maze-path {
+            position: relative;
+            height: 300px;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .maze-line {
+            position: absolute;
+            background-color: #e2e8f0;
+        }
+        
+        .maze-progress {
+            position: absolute;
+            background-color: #4299e1;
+            height: 4px;
+            transition: width 0.5s ease-in-out, height 0.5s ease-in-out, top 0.5s ease-in-out, left 0.5s ease-in-out;
+        }
+        
+        .maze-steps {
+            position: relative;
+            height: 100%;
+        }
+        
+        .maze-step {
+            position: absolute;
+            width: 80px;
+            text-align: center;
+        }
+        
+        .maze-icon {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 50%;
+            border: 3px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: bold;
+            color: #a0aec0;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .maze-step.active .maze-icon {
+            border-color: #4299e1;
+            color: #4299e1;
+            background-color: #ebf8ff;
+        }
+        
+        .maze-step.completed .maze-icon {
+            border-color: #48bb78;
+            background-color: #48bb78;
+            color: white;
+        }
+        
+        .maze-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #718096;
+        }
+        
+        .maze-step.active .maze-label,
+        .maze-step.completed .maze-label {
+            color: #2d3748;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Componente 1: Camino logístico en zigzag -->
+    <div class="component-container">
+        <h2 class="component-title">Seguimiento Logístico en Zigzag</h2>
+        <p class="component-description">Visualización del proceso de envío con un camino dinámico en zigzag que se completa progresivamente.</p>
+        
+        <div class="zigzag-tracker">
+            <svg class="zigzag-path" viewBox="0 0 800 300" preserveAspectRatio="none">
+                <path d="M0,50 Q200,0 400,150 Q600,300 800,150" />
+            </svg>
+            <svg class="zigzag-progress" viewBox="0 0 800 300" preserveAspectRatio="none">
+                <path d="M0,50 Q200,0 400,150 Q600,300 800,150" />
+            </svg>
+            
+            <ul class="zigzag-steps">
+                <li class="zigzag-step completed" style="left: 0; top: 50px;">
+                    <div class="step-icon">1</div>
+                    <div class="step-label">Pedido Confirmado</div>
+                    <div class="step-time">10:30 AM</div>
+                </li>
+                <li class="zigzag-step completed" style="left: 33%; top: 0;">
+                    <div class="step-icon">2</div>
+                    <div class="step-label">Preparando</div>
+                    <div class="step-time">11:45 AM</div>
+                </li>
+                <li class="zigzag-step active" style="left: 66%; top: 150px;">
+                    <div class="step-icon">3</div>
+                    <div class="step-label">En Camino</div>
+                    <div class="step-time">En curso</div>
+                </li>
+                <li class="zigzag-step" style="left: 100%; top: 100px;">
+                    <div class="step-icon">4</div>
+                    <div class="step-label">Entregado</div>
+                    <div class="step-time">--:-- --</div>
+                </li>
+            </ul>
+        </div>
+        
+        <script>
+            // Inicialización del componente Zigzag
+            document.addEventListener('DOMContentLoaded', function() {
+                const zigzagProgress = document.querySelector('.zigzag-progress');
+                const zigzagSteps = document.querySelectorAll('.zigzag-step');
+                
+                // Función para actualizar el progreso
+                function updateZigzagProgress(activeStepIndex) {
+                    // Calcular el porcentaje completado
+                    const progressPercent = (activeStepIndex / (zigzagSteps.length - 1)) * 100;
+                    const dashOffset = 1000 - (1000 * progressPercent / 100);
+                    
+                    // Actualizar la animación del camino
+                    zigzagProgress.style.strokeDashoffset = dashOffset;
+                    
+                    // Actualizar estados de los pasos
+                    zigzagSteps.forEach((step, index) => {
+                        step.classList.remove('active', 'completed');
+                        
+                        if (index < activeStepIndex) {
+                            step.classList.add('completed');
+                            step.querySelector('.step-icon').textContent = '✓';
+                        } else if (index === activeStepIndex) {
+                            step.classList.add('active');
+                        }
+                    });
+                }
+                
+                // Ejemplo: Simular progreso cada 3 segundos
+                let currentStep = 0;
+                const simulateProgress = setInterval(() => {
+                    updateZigzagProgress(currentStep);
+                    currentStep++;
+                    if (currentStep >= zigzagSteps.length) {
+                        clearInterval(simulateProgress);
+                    }
+                }, 3000);
+                
+                // Para uso real, llamar a updateZigzagProgress(stepIndex) con el paso actual
+            });
+        </script>
+    </div>
+
+    <!-- Componente 2: Validación circular de pedido -->
+    <div class="component-container">
+        <h2 class="component-title">Validación Circular de Pedido</h2>
+        <p class="component-description">Diagrama circular que muestra el progreso de validación de un pedido con pasos periféricos.</p>
+        
+        <div class="circular-validation">
+            <div class="circular-track">
+                <svg viewBox="0 0 200 200" class="circular-bg">
+                    <circle cx="100" cy="100" r="90" />
+                </svg>
+                <svg viewBox="0 0 200 200" class="circular-progress">
+                    <circle cx="100" cy="100" r="90" />
+                </svg>
+                <div class="circular-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: #4299e1;">75%</div>
+                    <div style="font-size: 0.875rem; color: #718096;">Completado</div>
+                </div>
+            </div>
+            
+            <div class="circular-steps">
+                <div class="validation-step completed">
+                    <div class="validation-badge">1</div>
+                    <div class="validation-label">Pago</div>
+                </div>
+                <div class="validation-step completed">
+                    <div class="validation-badge">2</div>
+                    <div class="validation-label">Reserva Stock</div>
+                </div>
+                <div class="validation-step active">
+                    <div class="validation-badge">3</div>
+                    <div class="validation-label">Picking</div>
+                </div>
+                <div class="validation-step">
+                    <div class="validation-badge">4</div>
+                    <div class="validation-label">Packing</div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // Inicialización del componente Circular
+            document.addEventListener('DOMContentLoaded', function() {
+                const circularProgress = document.querySelector('.circular-progress');
+                const validationSteps = document.querySelectorAll('.validation-step');
+                const progressText = document.querySelector('.circular-content div:first-child');
+                
+                // Función para actualizar el progreso circular
+                function updateCircularProgress(activeStepIndex) {
+                    // Calcular el porcentaje completado
+                    const progressPercent = (activeStepIndex / validationSteps.length) * 100;
+                    const dashOffset = 628 - (628 * progressPercent / 100);
+                    
+                    // Actualizar la animación del círculo
+                    circularProgress.style.strokeDashoffset = dashOffset;
+                    progressText.textContent = `${Math.round(progressPercent)}%`;
+                    
+                    // Actualizar estados de los pasos
+                    validationSteps.forEach((step, index) => {
+                        step.classList.remove('active', 'completed');
+                        
+                        if (index < activeStepIndex) {
+                            step.classList.add('completed');
+                        } else if (index === activeStepIndex) {
+                            step.classList.add('active');
+                        }
+                    });
+                }
+                
+                // Ejemplo: Simular progreso cada 3 segundos
+                let currentStep = 0;
+                const simulateProgress = setInterval(() => {
+                    updateCircularProgress(currentStep);
+                    currentStep++;
+                    if (currentStep > validationSteps.length) {
+                        clearInterval(simulateProgress);
+                    }
+                }, 3000);
+                
+                // Para uso real, llamar a updateCircularProgress(stepIndex) con el paso actual
+            });
+        </script>
+    </div>
+
+    <!-- Componente 3: Progreso de olas para delivery -->
+    <div class="component-container">
+        <h2 class="component-title">Progreso de Delivery con Efecto Ola</h2>
+        <p class="component-description">Visualización del progreso de envío con un efecto de ola que sube dinámicamente.</p>
+        
+        <div class="wave-delivery">
+            <div class="wave-container">
+                <div class="wave-progress" style="height: 60%;">
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                    <div class="wave"></div>
+                </div>
+            </div>
+            
+            <div class="delivery-steps">
+                <div class="delivery-step completed">
+                    <div class="delivery-marker"></div>
+                    <div class="delivery-label">Preparación</div>
+                </div>
+                <div class="delivery-step completed">
+                    <div class="delivery-marker"></div>
+                    <div class="delivery-label">Recogida</div>
+                </div>
+                <div class="delivery-step active">
+                    <div class="delivery-marker"></div>
+                    <div class="delivery-label">En Ruta</div>
+                </div>
+                <div class="delivery-step">
+                    <div class="delivery-marker"></div>
+                    <div class="delivery-label">Entrega</div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // Inicialización del componente Wave
+            document.addEventListener('DOMContentLoaded', function() {
+                const waveProgress = document.querySelector('.wave-progress');
+                const deliverySteps = document.querySelectorAll('.delivery-step');
+                
+                // Función para actualizar el progreso de la ola
+                function updateWaveProgress(activeStepIndex) {
+                    // Calcular el porcentaje completado
+                    const progressPercent = (activeStepIndex / (deliverySteps.length - 1)) * 100;
+                    
+                    // Actualizar la altura de la ola
+                    waveProgress.style.height = `${progressPercent}%`;
+                    
+                    // Actualizar estados de los pasos
+                    deliverySteps.forEach((step, index) => {
+                        step.classList.remove('active', 'completed');
+                        
+                        if (index < activeStepIndex) {
+                            step.classList.add('completed');
+                        } else if (index === activeStepIndex) {
+                            step.classList.add('active');
+                        }
+                    });
+                }
+                
+                // Ejemplo: Simular progreso cada 3 segundos
+                let currentStep = 0;
+                const simulateProgress = setInterval(() => {
+                    updateWaveProgress(currentStep);
+                    currentStep++;
+                    if (currentStep >= deliverySteps.length) {
+                        clearInterval(simulateProgress);
+                    }
+                }, 3000);
+                
+                // Para uso real, llamar a updateWaveProgress(stepIndex) con el paso actual
+            });
+        </script>
+    </div>
+
+    <!-- Componente 4: Diagrama de pasos tipo laberinto -->
+    <div class="component-container">
+        <h2 class="component-title">Proceso de Fulfillment en Laberinto</h2>
+        <p class="component-description">Visualización no lineal del proceso de fulfillment con un camino que recorre diferentes etapas.</p>
+        
+        <div class="maze-process">
+            <div class="maze-path">
+                <div class="maze-line" style="width: 100px; height: 4px; top: 50px; left: 80px;"></div>
+                <div class="maze-line" style="width: 4px; height: 100px; top: 50px; left: 180px;"></div>
+                <div class="maze-line" style="width: 100px; height: 4px; top: 150px; left: 180px;"></div>
+                <div class="maze-line" style="width: 4px; height: 100px; top: 150px; left: 380px;"></div>
+                <div class="maze-line" style="width: 100px; height: 4px; top: 50px; left: 380px;"></div>
+                
+                <div class="maze-progress" style="width: 100px; top: 50px; left: 80px;"></div>
+                
+                <div class="maze-steps">
+                    <div class="maze-step completed" style="top: 20px; left: 20px;">
+                        <div class="maze-icon">1</div>
+                        <div class="maze-label">Pedido</div>
+                    </div>
+                    <div class="maze-step completed" style="top: 20px; left: 180px;">
+                        <div class="maze-icon">2</div>
+                        <div class="maze-label">Pago</div>
+                    </div>
+                    <div class="maze-step active" style="top: 120px; left: 180px;">
+                        <div class="maze-icon">3</div>
+                        <div class="maze-label">Picking</div>
+                    </div>
+                    <div class="maze-step" style="top: 120px; left: 380px;">
+                        <div class="maze-icon">4</div>
+                        <div class="maze-label">Packing</div>
+                    </div>
+                    <div class="maze-step" style="top: 20px; left: 380px;">
+                        <div class="maze-icon">5</div>
+                        <div class="maze-label">Envío</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // Inicialización del componente Maze
+            document.addEventListener('DOMContentLoaded', function() {
+                const mazeProgress = document.querySelector('.maze-progress');
+                const mazeSteps = document.querySelectorAll('.maze-step');
+                const pathSegments = [
+                    { width: '100px', height: '4px', top: '50px', left: '80px' },   // Paso 1 a 2
+                    { width: '4px', height: '100px', top: '50px', left: '180px' }, // Paso 2 a 3
+                    { width: '100px', height: '4px', top: '150px', left: '180px' }, // Paso 3 a 4
+                    { width: '4px', height: '100px', top: '150px', left: '380px' }, // Paso 4 a 5
+                ];
+                
+                // Función para actualizar el progreso del laberinto
+                function updateMazeProgress(activeStepIndex) {
+                    // Actualizar el segmento de progreso visible
+                    if (activeStepIndex > 0) {
+                        const segment = pathSegments[activeStepIndex - 1];
+                        Object.assign(mazeProgress.style, segment);
+                    }
+                    
+                    // Actualizar estados de los pasos
+                    mazeSteps.forEach((step, index) => {
+                        step.classList.remove('active', 'completed');
+                        
+                        if (index < activeStepIndex) {
+                            step.classList.add('completed');
+                        } else if (index === activeStepIndex) {
+                            step.classList.add('active');
+                        }
+                    });
+                }
+                
+                // Ejemplo: Simular progreso cada 3 segundos
+                let currentStep = 0;
+                const simulateProgress = setInterval(() => {
+                    updateMazeProgress(currentStep);
+                    currentStep++;
+                    if (currentStep >= mazeSteps.length) {
+                        clearInterval(simulateProgress);
+                    }
+                }, 3000);
+                
+                // Para uso real, llamar a updateMazeProgress(stepIndex) con el paso actual
+            });
+        </script>
+    </div>
+</body>
+</html>
