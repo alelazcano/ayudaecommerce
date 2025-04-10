@@ -1,0 +1,454 @@
+<!--
+  Las cuentas regresivas anticipan un evento: puede ser una fecha de alto tráfico, inicio/fin de temporada, previa de un aniversario o lanzamiento.
+  Todos los ejemplos podés usarlos por separado, recortando el fragmento que corresponde a cada uno y haciendo pequeños ajustes.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdowns Creativos Hot Sale</title>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.0.1/build/global/luxon.min.js"></script>
+    <style>
+        :root {
+            --hot-red: #e63946;
+            --hot-pink: #ff006e;
+            --hot-orange: #ff7b25;
+            --hot-yellow: #ffbe0b;
+        }
+        
+        body {
+            font-family: 'Montserrat', system-ui, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .countdown-card {
+            margin: 40px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            background: white;
+        }
+        
+        .countdown-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--hot-red), var(--hot-pink));
+            color: white;
+        }
+        
+        h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Countdown 1: Neon Glitch */
+        .neon-countdown {
+            padding: 30px;
+            background: #0f0f13;
+            position: relative;
+        }
+        
+        .neon-digits {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Orbitron', monospace;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--hot-pink);
+            text-shadow: 0 0 10px var(--hot-pink), 
+                         0 0 20px rgba(255, 0, 110, 0.5);
+            position: relative;
+        }
+        
+        .neon-digits::before {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            color: var(--hot-yellow);
+            text-shadow: 0 0 10px var(--hot-yellow);
+            animation: glitch 3s infinite alternate;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+        }
+        
+        .neon-digits::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            color: #00f7ff;
+            text-shadow: 0 0 10px #00f7ff;
+            animation: glitch 2s infinite alternate-reverse;
+            clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+        }
+        
+        .neon-separator {
+            display: flex;
+            align-items: center;
+            color: var(--hot-orange);
+        }
+        
+        .neon-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+        
+        /* Countdown 2: Liquid Metal */
+        .liquid-countdown {
+            padding: 30px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .liquid-digits {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 5rem;
+            font-weight: 800;
+            color: transparent;
+            background: linear-gradient(90deg, var(--hot-orange), var(--hot-yellow), var(--hot-orange));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 3s linear infinite;
+            position: relative;
+        }
+        
+        .liquid-digits::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(90deg, var(--hot-orange), var(--hot-yellow), var(--hot-orange));
+            background-size: 200% auto;
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.7;
+            animation: shine 3s linear infinite;
+        }
+        
+        .liquid-separator {
+            display: flex;
+            align-items: center;
+            color: var(--hot-yellow);
+            font-weight: 700;
+        }
+        
+        .liquid-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+        
+        /* Countdown 3: Holographic */
+        .holographic-countdown {
+            padding: 30px;
+            background: 
+                radial-gradient(circle at center, rgba(255,0,110,0.1) 0%, transparent 70%),
+                linear-gradient(135deg, #010024, #000000);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .holographic-digits {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 4.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 0 5px #fff,
+                         0 0 10px var(--hot-pink),
+                         0 0 20px var(--hot-red),
+                         0 0 40px var(--hot-orange);
+            position: relative;
+        }
+        
+        .holographic-digits::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, 
+                    transparent, 
+                    rgba(255, 190, 11, 0.1), 
+                    transparent);
+            animation: hologram 3s linear infinite;
+        }
+        
+        .holographic-separator {
+            display: flex;
+            align-items: center;
+            color: var(--hot-yellow);
+            text-shadow: 0 0 5px var(--hot-yellow);
+        }
+        
+        .holographic-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        @keyframes hologram {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Countdown Manager -->
+    <script>
+        class HotSaleCountdown {
+            constructor(endDate, elements, updateCallback, completeCallback) {
+                this.endDate = luxon.DateTime.fromISO(endDate);
+                this.elements = elements;
+                this.updateCallback = updateCallback;
+                this.completeCallback = completeCallback;
+                this.interval = null;
+            }
+            
+            start() {
+                this.update();
+                this.interval = setInterval(() => this.update(), 1000);
+            }
+            
+            update() {
+                const now = luxon.DateTime.now();
+                const diff = this.endDate.diff(now, ['days', 'hours', 'minutes', 'seconds']);
+                
+                if (diff.toMillis() <= 0) {
+                    this.complete();
+                    return;
+                }
+                
+                const timeData = {
+                    days: diff.days.toString().padStart(2, '0'),
+                    hours: diff.hours.toString().padStart(2, '0'),
+                    minutes: diff.minutes.toString().padStart(2, '0'),
+                    seconds: diff.seconds.toString().padStart(2, '0'),
+                    totalMs: diff.toMillis()
+                };
+                
+                if (this.elements.days) this.elements.days.textContent = timeData.days;
+                if (this.elements.hours) this.elements.hours.textContent = timeData.hours;
+                if (this.elements.minutes) this.elements.minutes.textContent = timeData.minutes;
+                if (this.elements.seconds) this.elements.seconds.textContent = timeData.seconds;
+                
+                this.updateCallback?.(timeData);
+            }
+            
+            complete() {
+                clearInterval(this.interval);
+                this.completeCallback?.();
+            }
+        }
+    </script>
+
+    <!-- Countdown 1: Neon Glitch -->
+    <div class="countdown-card">
+        <div class="countdown-header">
+            <h2>¡EL HOT SALE SE ACERCA!</h2>
+        </div>
+        <div class="neon-countdown">
+            <div class="neon-digits" data-text="00:00:00:00">
+                <span id="neon-days">00</span>
+                <span class="neon-separator">:</span>
+                <span id="neon-hours">00</span>
+                <span class="neon-separator">:</span>
+                <span id="neon-minutes">00</span>
+                <span class="neon-separator">:</span>
+                <span id="neon-seconds">00</span>
+            </div>
+            <div class="neon-labels">
+                <span>Días</span>
+                <span>Horas</span>
+                <span>Minutos</span>
+                <span>Segundos</span>
+            </div>
+        </div>
+        
+        <script>
+            const neonCountdown = new HotSaleCountdown(
+                '2025-05-12T00:00:00-03:00',
+                {
+                    days: document.getElementById('neon-days'),
+                    hours: document.getElementById('neon-hours'),
+                    minutes: document.getElementById('neon-minutes'),
+                    seconds: document.getElementById('neon-seconds')
+                },
+                null,
+                () => {
+                    document.querySelector('.neon-countdown').innerHTML = `
+                        <div style="text-align: center; padding: 40px 0;">
+                            <div style="font-size: 2.5rem; font-weight: 700; color: var(--hot-yellow); 
+                                text-shadow: 0 0 10px var(--hot-yellow); margin-bottom: 20px;">
+                                ¡HOT SALE ACTIVO!
+                            </div>
+                            <div style="color: white; font-size: 1.2rem;">
+                                Las mejores ofertas están esperando por ti
+                            </div>
+                        </div>
+                    `;
+                }
+            );
+            neonCountdown.start();
+        </script>
+    </div>
+
+    <!-- Countdown 2: Liquid Metal -->
+    <div class="countdown-card">
+        <div class="countdown-header" style="background: linear-gradient(135deg, var(--hot-orange), var(--hot-yellow));">
+            <h2>OFERTAS EN FUSIÓN</h2>
+        </div>
+        <div class="liquid-countdown">
+            <div class="liquid-digits">
+                <span id="liquid-days">00</span>
+                <span class="liquid-separator">:</span>
+                <span id="liquid-hours">00</span>
+                <span class="liquid-separator">:</span>
+                <span id="liquid-minutes">00</span>
+                <span class="liquid-separator">:</span>
+                <span id="liquid-seconds">00</span>
+            </div>
+            <div class="liquid-labels">
+                <span>Días</span>
+                <span>Horas</span>
+                <span>Minutos</span>
+                <span>Segundos</span>
+            </div>
+        </div>
+        
+        <script>
+            const liquidCountdown = new HotSaleCountdown(
+                '2025-05-12T00:00:00-03:00',
+                {
+                    days: document.getElementById('liquid-days'),
+                    hours: document.getElementById('liquid-hours'),
+                    minutes: document.getElementById('liquid-minutes'),
+                    seconds: document.getElementById('liquid-seconds')
+                },
+                null,
+                () => {
+                    document.querySelector('.liquid-countdown').innerHTML = `
+                        <div style="text-align: center; padding: 40px 0;">
+                            <div style="font-size: 2.5rem; font-weight: 800; 
+                                background: linear-gradient(90deg, var(--hot-orange), var(--hot-yellow), var(--hot-orange));
+                                background-size: 200% auto;
+                                -webkit-background-clip: text;
+                                background-clip: text;
+                                color: transparent;
+                                margin-bottom: 20px;">
+                                ¡OFERTAS AL ROJO VIVO!
+                            </div>
+                            <div style="color: rgba(255,255,255,0.9); font-size: 1.2rem;">
+                                No dejes que se enfríen
+                            </div>
+                        </div>
+                    `;
+                }
+            );
+            liquidCountdown.start();
+        </script>
+    </div>
+
+    <!-- Countdown 3: Holographic -->
+    <div class="countdown-card">
+        <div class="countdown-header" style="background: linear-gradient(135deg, var(--hot-pink), var(--hot-red));">
+            <h2>OFERTAS HOLOGRÁFICAS</h2>
+        </div>
+        <div class="holographic-countdown">
+            <div class="holographic-digits">
+                <span id="holographic-days">00</span>
+                <span class="holographic-separator">:</span>
+                <span id="holographic-hours">00</span>
+                <span class="holographic-separator">:</span>
+                <span id="holographic-minutes">00</span>
+                <span class="holographic-separator">:</span>
+                <span id="holographic-seconds">00</span>
+            </div>
+            <div class="holographic-labels">
+                <span>Días</span>
+                <span>Horas</span>
+                <span>Minutos</span>
+                <span>Segundos</span>
+            </div>
+        </div>
+        
+        <script>
+            const holographicCountdown = new HotSaleCountdown(
+                '2025-05-12T00:00:00-03:00',
+                {
+                    days: document.getElementById('holographic-days'),
+                    hours: document.getElementById('holographic-hours'),
+                    minutes: document.getElementById('holographic-minutes'),
+                    seconds: document.getElementById('holographic-seconds')
+                },
+                null,
+                () => {
+                    document.querySelector('.holographic-countdown').innerHTML = `
+                        <div style="text-align: center; padding: 40px 0;">
+                            <div style="font-size: 2.5rem; font-weight: 800; color: white;
+                                text-shadow: 0 0 10px #fff,
+                                0 0 20px var(--hot-pink),
+                                0 0 40px var(--hot-red);
+                                margin-bottom: 20px;">
+                                ¡OFERTAS DESPLEGADAS!
+                            </div>
+                            <div style="color: rgba(255,255,255,0.9); font-size: 1.2rem;">
+                                El futuro de las compras está aquí
+                            </div>
+                        </div>
+                    `;
+                }
+            );
+            holographicCountdown.start();
+        </script>
+    </div>
+</body>
+</html>
