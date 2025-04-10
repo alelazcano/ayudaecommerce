@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos de Barras de Progreso</title>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .example {
+            margin: 40px 0;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        
+        /* Ejemplo 1: Barra simple con porcentaje */
+        .progress-container-1 {
+            width: 100%;
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            margin: 15px 0;
+        }
+        
+        .progress-bar-1 {
+            height: 30px;
+            border-radius: 20px;
+            background-color: #4CAF50;
+            width: 100%;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            transition: width 0.3s;
+        }
+        
+        /* Ejemplo 2: Pasos horizontales con texto */
+        .progress-steps-2 {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 30px 0;
+        }
+        
+        .progress-steps-2::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+        
+        .progress-line-2 {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            height: 4px;
+            background-color: #3498db;
+            z-index: 2;
+            transition: width 0.3s;
+        }
+        
+        .step-2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 3;
+        }
+        
+        .step-circle-2 {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            font-weight: bold;
+            margin-bottom: 5px;
+            border: 3px solid #e0e0e0;
+        }
+        
+        .step-2.active .step-circle-2 {
+            background-color: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+        
+        .step-2.completed .step-circle-2 {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+        
+        .step-label-2 {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .step-2.active .step-label-2,
+        .step-2.completed .step-label-2 {
+            color: #333;
+            font-weight: bold;
+        }
+        
+        /* Ejemplo 3: Barra de progreso con pasos integrados */
+        .progress-container-3 {
+            width: 100%;
+            background-color: #f1f1f1;
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .progress-bar-3 {
+            height: 100%;
+            border-radius: 5px;
+            background-color: #3498db;
+            width: 75%;
+            transition: width 0.3s;
+        }
+        
+        .progress-steps-3 {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: -20px;
+            left: 0;
+            right: 0;
+        }
+        
+        .step-3 {
+            position: relative;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .step-3.completed {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .step-3.active {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        /* Ejemplo 4: Barra con porcentaje y tiempo estimado */
+        .progress-container-4 {
+            width: 100%;
+            background-color: #f1f1f1;
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .progress-bar-4 {
+            height: 100%;
+            border-radius: 4px;
+            background-color: #e67e22;
+            width: 75%;
+            transition: width 0.3s;
+        }
+        
+        .progress-info-4 {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        /* Ejemplo 5: Indicador de estado con descripción */
+        .status-container-5 {
+            display: flex;
+            align-items: flex-start;
+            margin: 20px 0;
+        }
+        
+        .status-number-5 {
+            background-color: #3498db;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .status-content-5 h3 {
+            margin: 0 0 5px 0;
+            color: #2c3e50;
+        }
+        
+        .status-content-5 p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Ejemplo 6: Indicador de paso simple */
+        .step-indicator-6 {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #666;
+            border: 1px solid #ddd;
+        }
+        
+        .step-number-6 {
+            background-color: #3498db;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        /* Ejemplo 7: Botones de navegación */
+        .nav-buttons-7 {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+        
+        .nav-button-7 {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button-7.previous {
+            background-color: #f1f1f1;
+            color: #666;
+        }
+        
+        .nav-button-7.previous:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .nav-button-7.next {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .nav-button-7.next:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Ejemplo 8: Pestañas de progreso */
+        .tab-progress-8 {
+            display: flex;
+            border-bottom: 2px solid #f1f1f1;
+            margin: 20px 0;
+        }
+        
+        .tab-8 {
+            padding: 10px 20px;
+            cursor: pointer;
+            color: #666;
+            position: relative;
+            text-align: center;
+        }
+        
+        .tab-8.active {
+            color: #3498db;
+            font-weight: bold;
+        }
+        
+        .tab-8.active::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #3498db;
+        }
+        
+        .tab-8.completed {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejemplos de Barras de Progreso</h1>
+    
+    <!-- Ejemplo 1: Barra simple con porcentaje -->
+    <div class="example">
+        <h2>1. Barra simple con porcentaje</h2>
+        <p>Una barra de progreso simple que muestra el porcentaje completado.</p>
+        
+        <div class="progress-container-1">
+            <div class="progress-bar-1" id="progressBar1">100% Completed</div>
+        </div>
+        
+        <script>
+            // Ejemplo 1: Barra simple con porcentaje
+            // Para cambiar el progreso, modificar el width y el texto
+            const progressBar1 = document.getElementById('progressBar1');
+            // progressBar1.style.width = '75%';
+            // progressBar1.textContent = '75% Completed';
+        </script>
+    </div>
+    
+    <!-- Ejemplo 2: Pasos horizontales con texto -->
+    <div class="example">
+        <h2>2. Pasos horizontales con texto</h2>
+        <p>Indicador de pasos con círculos y texto descriptivo.</p>
+        
+        <div class="progress-steps-2">
+            <div class="progress-line-2" id="progressLine2" style="width: 50%;"></div>
+            
+            <div class="step-2 completed">
+                <div class="step-circle-2">✓</div>
+                <span class="step-label-2">Checkout</span>
+            </div>
+            
+            <div class="step-2 completed">
+                <div class="step-circle-2">✓</div>
+                <span class="step-label-2">Shipping</span>
+            </div>
+            
+            <div class="step-2 active">
+                <div class="step-circle-2">3</div>
+                <span class="step-label-2">Payment</span>
+            </div>
+            
+            <div class="step-2">
+                <div class="step-circle-2">4</div>
+                <span class="step-label-2">Confirm</span>
+            </div>
+        </div>
+        
+        <script>
+            // Ejemplo 2: Pasos horizontales con texto
+            // Para cambiar el paso activo y el progreso
+            function setActiveStep2(stepNumber) {
+                const steps = document.querySelectorAll('.step-2');
+                const progressLine = document.getElementById('progressLine2');
+                
+                steps.forEach((step, index) => {
+                    step.classList.remove('active', 'completed');
+                    if (index < stepNumber - 1) {
+                        step.classList.add('completed');
+                        step.querySelector('.step-circle-2').textContent = '✓';
+                    }
+                });
+                
+                steps[stepNumber - 1].classList.add('active');
+                steps[stepNumber - 1].querySelector('.step-circle-2').textContent = stepNumber;
+                
+                // Calcular el ancho de la línea de progreso
+                const progressWidth = ((stepNumber - 1) / (steps.length - 1)) * 100;
+                progressLine.style.width = `${progressWidth}%`;
+            }
+            
+            // Ejemplo: Marcar el paso 3 como activo
+            // setActiveStep2(3);
+        </script>
+    </div>
+    
+    <!-- Ejemplo 3: Barra de progreso con pasos integrados -->
+    <div class="example">
+        <h2>3. Barra de progreso con pasos integrados</h2>
+        <p>Barra de progreso con los pasos mostrados como texto encima.</p>
+        
+        <div class="progress-steps-3">
+            <div class="step-3 completed">Customer</div>
+            <div class="step-3 completed">Shipping</div>
+            <div class="step-3 active">Payment</div>
+            <div class="step-3">Confirm</div>
+            <div class="step-3">Success</div>
+        </div>
+        
+        <div class="progress-container-3">
+            <div class="progress-bar-3" id="progressBar3"></div>
+        </div>
+        
+        <script>
+            // Ejemplo 3: Barra de progreso con pasos integrados
+            function updateProgress3(activeStep) {
+                const steps = document.querySelectorAll('.step-3');
+                const progressBar = document.getElementById('progressBar3');
+                
+                steps.forEach((step, index) => {
+                    step.classList.remove('active', 'completed');
+                    if (index < activeStep - 1) {
+                        step.classList.add('completed');
+                    }
+                });
+                
+                steps[activeStep - 1].classList.add('active');
+                
+                // Calcular el progreso (asumiendo 5 pasos)
+                const progress = ((activeStep - 1) / (steps.length - 1)) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            // Ejemplo: Marcar "Payment" como activo (paso 3 de 5)
+            // updateProgress3(3);
+        </script>
+    </div>
+    
+    <!-- Ejemplo 4: Barra con porcentaje y tiempo estimado -->
+    <div class="example">
+        <h2>4. Barra con porcentaje y tiempo estimado</h2>
+        <p>Barra de progreso con información adicional de porcentaje y tiempo restante.</p>
+        
+        <div class="progress-container-4">
+            <div class="progress-bar-4"></div>
+        </div>
+        
+        <div class="progress-info-4">
+            <span>75% to complete</span>
+            <span>39min</span>
+        </div>
+        
+        <script>
+            // Ejemplo 4: Barra con porcentaje y tiempo estimado
+            function updateProgress4(percent, timeRemaining) {
+                const progressBar = document.querySelector('.progress-bar-4');
+                const progressInfo = document.querySelector('.progress-info-4');
+                
+                progressBar.style.width = `${percent}%`;
+                progressInfo.innerHTML = `<span>${percent}% to complete</span><span>${timeRemaining}</span>`;
+            }
+            
+            // Ejemplo: Actualizar al 45% con 1h 15min restantes
+            // updateProgress4(45, '1h 15min');
+        </script>
+    </div>
+    
+    <!-- Ejemplo 5: Indicador de estado con descripción -->
+    <div class="example">
+        <h2>5. Indicador de estado con descripción</h2>
+        <p>Indicador numérico con título y descripción del paso actual.</p>
+        
+        <div class="status-container-5">
+            <div class="status-number-5">1 of 4</div>
+            <div class="status-content-5">
+                <h3>Payment</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+        </div>
+        
+        <script>
+            // Ejemplo 5: Indicador de estado con descripción
+            function updateStatus5(stepNumber, totalSteps, title, description) {
+                const statusNumber = document.querySelector('.status-number-5');
+                const statusContent = document.querySelector('.status-content-5');
+                
+                statusNumber.textContent = `${stepNumber} of ${totalSteps}`;
+                statusContent.querySelector('h3').textContent = title;
+                statusContent.querySelector('p').textContent = description;
+            }
+            
+            // Ejemplo: Actualizar al paso 2 de 4
+            // updateStatus5(2, 4, 'Shipping', 'Enter your shipping information');
+        </script>
+    </div>
+    
+    <!-- Ejemplo 6: Indicador de paso simple -->
+    <div class="example">
+        <h2>6. Indicador de paso simple</h2>
+        <p>Indicador compacto con número de paso y texto descriptivo.</p>
+        
+        <div class="step-indicator-6">
+            <div class="step-number-6">2</div>
+            <div class="step-text-6">Step 2 Overview UIUX</div>
+        </div>
+        
+        <script>
+            // Ejemplo 6: Indicador de paso simple
+            function updateStepIndicator6(stepNumber, stepText) {
+                const stepNumberElem = document.querySelector('.step-number-6');
+                const stepTextElem = document.querySelector('.step-text-6');
+                
+                stepNumberElem.textContent = stepNumber;
+                stepTextElem.textContent = stepText;
+            }
+            
+            // Ejemplo: Actualizar al paso 3
+            // updateStepIndicator6(3, 'Step 3 Payment Details');
+        </script>
+    </div>
+    
+    <!-- Ejemplo 7: Botones de navegación -->
+    <div class="example">
+        <h2>7. Botones de navegación</h2>
+        <p>Botones "Anterior" y "Siguiente" para navegar entre pasos.</p>
+        
+        <div class="nav-buttons-7">
+            <button class="nav-button-7 previous">Previous</button>
+            <button class="nav-button-7 next">Next →</button>
+        </div>
+        
+        <script>
+            // Ejemplo 7: Botones de navegación
+            document.querySelector('.nav-button-7.previous').addEventListener('click', () => {
+                alert('Botón Anterior clickeado');
+                // Aquí iría la lógica para retroceder un paso
+            });
+            
+            document.querySelector('.nav-button-7.next').addEventListener('click', () => {
+                alert('Botón Siguiente clickeado');
+                // Aquí iría la lógica para avanzar un paso
+            });
+        </script>
+    </div>
+    
+    <!-- Ejemplo 8: Pestañas de progreso -->
+    <div class="example">
+        <h2>8. Pestañas de progreso</h2>
+        <p>Pestañas que indican el progreso a través de un proceso.</p>
+        
+        <div class="tab-progress-8">
+            <div class="tab-8 completed">Step 1</div>
+            <div class="tab-8 active">Step 2</div>
+            <div class="tab-8">Step 3</div>
+        </div>
+        
+        <script>
+            // Ejemplo 8: Pestañas de progreso
+            function setActiveTab8(tabIndex) {
+                const tabs = document.querySelectorAll('.tab-8');
+                
+                tabs.forEach((tab, index) => {
+                    tab.classList.remove('active', 'completed');
+                    if (index < tabIndex) {
+                        tab.classList.add('completed');
+                    }
+                });
+                
+                tabs[tabIndex].classList.add('active');
+            }
+            
+            // Ejemplo: Marcar la segunda pestaña como activa
+            // setActiveTab8(1);
+        </script>
+    </div>
+</body>
+</html>
