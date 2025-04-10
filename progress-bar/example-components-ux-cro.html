@@ -1,0 +1,289 @@
+<!-- 
+Explicación de cada Micro-Componente
+
+Usalos con criterio: pueden ser facilitadores de la conversión y la UX, como también de forma poco ética dark-patterns (patrones oscuros, manipulación).
+
+1. Urgencia de Stock
+Principio: Escasez
+Implementación: Barra de progreso nativa + texto
+Uso: Mostrar cantidades limitadas reales
+Efecto: Aumenta la percepción de valor y urgenci
+Ético: Solo usar cuando sea verdadero
+
+2. Umbral de Envío Gratis
+Principio: Anclaje + efecto goal-gradient
+Implementación: Elemento <progress> + emojis
+Uso: Mostrar progreso hacia meta de envío gratis
+Efecto: Incentiva a añadir más productos al carrito
+Ético: Mostrar solo cuando sea alcanzable
+
+3. Validación Social Mínima
+Principio: Prueba social
+Implementación: Texto simple con puntos de separación
+Uso: Mostrar adopción reciente y valoración
+Efecto: Reduce incertidumbre en la decisión
+Ético: Datos reales, sin exagerar
+
+4. Guía de Decisión
+Principio: Paradoja de elección
+Implementación: Una sola línea de texto
+Uso: Reducir opciones destacando la más popular
+Efecto: Facilita la decisión del usuario
+Ético: Basado en datos reales de compra
+
+5. Compromiso de Intención
+Principio: Compromiso y consistencia
+Implementación: Checkbox simple
+Uso: Pequeña acción que aumenta compromiso
+Efecto: Mayor probabilidad de compra posterior
+Ético: Opción clara y reversible
+
+6. Escasez Temporal
+Principio: Urgencia temporal
+Implementación: Badge con contador
+Uso: Ofertas por tiempo real limitado
+Efecto: Incentiva acción inmediata
+Ético: Solo para promociones reales con fecha fin
+
+IMPORTANTE: Cada componente usa el mínimo CSS/JS necesario para ser efectivo. Son fáciles de implementar y modificar según necesidades específicas.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Micro Componentes de Conversión</title>
+    <style>
+        /* Estilos mínimos base */
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.5;
+            color: #333;
+        }
+        
+        .micro-component {
+            margin: 30px 0;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 6px;
+        }
+        
+        h3 {
+            margin-top: 0;
+            color: #222;
+        }
+        
+        /* Componente 1: Urgencia de stock */
+        .stock-urgency {
+            font-size: 14px;
+        }
+        
+        .stock-bar {
+            width: 100%;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            margin: 5px 0;
+            overflow: hidden;
+        }
+        
+        .stock-progress {
+            height: 100%;
+            background: #e74c3c;
+            width: 15%;
+        }
+        
+        .stock-message {
+            font-size: 13px;
+            color: #e74c3c;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Componente 2: Envío gratuito cercano */
+        .free-shipping {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .free-shipping .emoji {
+            font-size: 18px;
+            margin-right: 8px;
+        }
+        
+        .free-shipping progress {
+            flex-grow: 1;
+            height: 6px;
+            margin: 0 8px;
+        }
+        
+        /* Componente 3: Social proof mínimo */
+        .social-proof {
+            font-size: 13px;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+        
+        .social-proof .dots {
+            margin: 0 5px;
+            letter-spacing: 2px;
+        }
+        
+        /* Componente 4: Reducción de opciones */
+        .choice-helper {
+            font-size: 14px;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .choice-helper strong {
+            color: #2c7be5;
+        }
+        
+        /* Componente 5: Compromiso mínimo */
+        .commitment-nudge {
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .commitment-nudge input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        /* Componente 6: Efecto de escasez */
+        .scarcity-badge {
+            display: inline-block;
+            background: #fff8e6;
+            color: #e67e22;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid #ffe3b8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Componente 1: Urgencia de stock (Escasez) -->
+    <div class="micro-component">
+        <h3>1. Urgencia de Stock</h3>
+        <p>Muestra la cantidad limitada para crear sentido de urgencia.</p>
+        
+        <div class="stock-urgency">
+            <div>Disponibilidad: <strong>3/20 unidades</strong></div>
+            <div class="stock-bar">
+                <div class="stock-progress"></div>
+            </div>
+            <div class="stock-message">
+                <span>¡Quedan pocas! • Solo 3 disponibles</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Componente 2: Envío gratuito cercano (Anclaje) -->
+    <div class="micro-component">
+        <h3>2. Umbral de Envío Gratis</h3>
+        <p>Incentiva a aumentar el carrito para alcanzar el envío gratis.</p>
+        
+        <div class="free-shipping">
+            <span class="emoji">🚛💵</span>
+            <span>Añade <strong>$15.50</strong> para envío gratis</span>
+            <progress value="65" max="100"></progress>
+            <span>65%</span>
+        </div>
+    </div>
+
+    <!-- Componente 3: Social proof mínimo (Prueba social) -->
+    <div class="micro-component">
+        <h3>3. Validación Social Mínima</h3>
+        <p>Muestra adopción reciente sin saturar con información.</p>
+        
+        <div class="social-proof">
+            <span>Comprado 12 veces hoy</span>
+            <span class="dots">• • •</span>
+            <span>⭐ 4.8/5 (143)</span>
+        </div>
+    </div>
+
+    <!-- Componente 4: Reducción de opciones (Paradoja de elección) -->
+    <div class="micro-component">
+        <h3>4. Guía de Decisión</h3>
+        <p>Ayuda a elegir reduciendo la carga cognitiva.</p>
+        
+        <div class="choice-helper">
+            <span>El 82% elige la <strong>versión Pro</strong> para este uso.</span>
+        </div>
+    </div>
+
+    <!-- Componente 5: Compromiso mínimo (Compromiso) -->
+    <div class="micro-component">
+        <h3>5. Compromiso de Intención</h3>
+        <p>Pequeño compromiso inicial que aumenta la probabilidad de compra.</p>
+        
+        <div class="commitment-nudge">
+            <input type="checkbox" id="save-cart">
+            <label for="save-cart">Guardar en carrito para después (te recordaremos)</label>
+        </div>
+    </div>
+
+    <!-- Componente 6: Efecto de escasez temporal -->
+    <div class="micro-component">
+        <h3>6. Escasez Temporal</h3>
+        <p>Indica ofertas por tiempo limitado sin falsas urgencias.</p>
+        
+        <div>
+            <span class="scarcity-badge">Oferta termina en 02:45:32</span>
+            <span> - Precio especial por lanzamiento</span>
+        </div>
+    </div>
+
+    <script>
+        // Micro-interacciones opcionales (mínimas)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Componente 2: Actualizar progreso de envío gratis
+            const cartTotal = 84.50;
+            const freeShippingThreshold = 100;
+            const progressPercent = (cartTotal / freeShippingThreshold) * 100;
+            
+            const progressBar = document.querySelector('.free-shipping progress');
+            const progressText = document.querySelector('.free-shipping strong');
+            
+            if (progressBar && progressText) {
+                progressBar.value = progressPercent;
+                const remaining = (freeShippingThreshold - cartTotal).toFixed(2);
+                progressText.textContent = `$${remaining}`;
+            }
+            
+            // Componente 6: Contador regresivo realista
+            const scarcityBadge = document.querySelector('.scarcity-badge');
+            if (scarcityBadge) {
+                let timeLeft = 2 * 60 * 60 + 45 * 60 + 32; // 2h 45m 32s
+                
+                const updateTimer = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft <= 0) {
+                        clearInterval(updateTimer);
+                        scarcityBadge.textContent = "Oferta finalizada";
+                        return;
+                    }
+                    
+                    const hours = Math.floor(timeLeft / 3600);
+                    const minutes = Math.floor((timeLeft % 3600) / 60);
+                    const seconds = timeLeft % 60;
+                    
+                    scarcityBadge.textContent = `Oferta termina en ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+</html>
