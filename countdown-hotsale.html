@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdowns Extremos Hot Sale 2025</title>
+    <!-- Usamos date-fns (2KB gzipped) para manejo de fechas -->
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.3/date_fns.min.js"></script>
+    <style>
+        body {
+            font-family: 'Barlow', sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .countdown-card {
+            margin: 40px 0;
+            padding: 25px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        h2 {
+            margin-top: 0;
+            color: #d32f2f;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Countdown 1: Explosión digital */
+        .digital-explosion {
+            text-align: center;
+            position: relative;
+            height: 200px;
+        }
+        
+        .explosion-piece {
+            position: absolute;
+            font-size: 24px;
+            font-weight: 900;
+            color: #d32f2f;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            animation: explode 2s infinite alternate;
+        }
+        
+        @keyframes explode {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+        }
+        
+        .explosion-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ff0000, #ff8a00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255,0,0,0.3);
+        }
+        
+        /* Countdown 2: Carrera de autos */
+        .race-track {
+            height: 100px;
+            background: #333;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            margin: 30px 0;
+        }
+        
+        .race-car {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+            transition: left 1s linear;
+        }
+        
+        .race-flag {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 30px;
+        }
+        
+        /* Countdown 3: Corazón latiendo */
+        .heart-container {
+            text-align: center;
+            height: 150px;
+            position: relative;
+        }
+        
+        .heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            color: #d32f2f;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            25% { transform: translate(-50%, -50%) scale(1.1); }
+            50% { transform: translate(-50%, -50%) scale(1); }
+            75% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+        
+        /* Countdown 4: Globo que se infla */
+        .balloon-container {
+            text-align: center;
+            height: 200px;
+        }
+        
+        .balloon {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            background: #d32f2f;
+            border-radius: 50%;
+            position: relative;
+            transition: all 1s ease;
+        }
+        
+        .balloon:before {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 30px;
+            background: #b71c1c;
+            border-radius: 50% 50% 0 0;
+        }
+        
+        .balloon-string {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            width: 2px;
+            height: 40px;
+            background: #333;
+        }
+        
+        /* Countdown 5: Huida de fantasmas */
+        .ghost-container {
+            height: 120px;
+            background: #111;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ghost {
+            position: absolute;
+            font-size: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: float 3s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(-50%); }
+            50% { transform: translateY(-70%); }
+        }
+        
+        /* Countdown 6: Línea de tiempo */
+        .timeline {
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            position: relative;
+            margin: 40px 0;
+        }
+        
+        .timeline-progress {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(90deg, #d32f2f, #f57c00);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 1s;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            top: -15px;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        
+        .timeline-now {
+            position: absolute;
+            top: 20px;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Countdown Manager (único para todos) -->
+    <script>
+        class CountdownManager {
+            constructor(targetDate) {
+                this.targetDate = dateFns.parseISO(targetDate);
+                this.instances = [];
+            }
+            
+            addInstance(updateCallback) {
+                this.instances.push(updateCallback);
+            }
+            
+            start() {
+                this.update();
+                setInterval(() => this.update(), 1000);
+            }
+            
+            update() {
+                const now = new Date();
+                const diff = dateFns.differenceInMilliseconds(this.targetDate, now);
+                
+                if (diff <= 0) {
+                    this.instances.forEach(cb => cb(0, 0, 0, 0));
+                    return;
+                }
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                this.instances.forEach(cb => cb(days, hours, minutes, seconds));
+            }
+        }
+        
+        // Configurar para Hot Sale 2025 (12 Mayo 00:00 GMT-3)
+        const countdownManager = new CountdownManager('2025-05-12T00:00:00-03:00');
+    </script>
+
+    <!-- Countdown 1: Explosión digital -->
+    <div class="countdown-card">
+        <h2>Countdown Explosivo</h2>
+        <p>Los números explotan desde el centro a medida que se acerca el Hot Sale</p>
+        
+        <div class="digital-explosion">
+            <div class="explosion-center" id="explosion-main">00</div>
+            <!-- Piezas de explosión se generan dinámicamente -->
+        </div>
+        
+        <script>
+            const explosionMain = document.getElementById('explosion-main');
+            const explosionContainer = document.querySelector('.digital-explosion');
+            
+            function createExplosionPieces() {
+                for (let i = 0; i < 20; i++) {
+                    const piece = document.createElement('div');
+                    piece.className = 'explosion-piece';
+                    piece.style.left = `${Math.random() * 100}%`;
+                    piece.style.top = `${Math.random() * 100}%`;
+                    piece.style.animationDelay = `${Math.random() * 2}s`;
+                    explosionContainer.appendChild(piece);
+                }
+            }
+            
+            function updateExplosion(days, hours, minutes, seconds) {
+                explosionMain.textContent = days;
+                
+                const pieces = document.querySelectorAll('.explosion-piece');
+                pieces.forEach(piece => {
+                    piece.textContent = Math.random() > 0.5 ? hours : minutes;
+                });
+            }
+            
+            createExplosionPieces();
+            countdownManager.addInstance(updateExplosion);
+        </script>
+    </div>
+
+    <!-- Countdown 2: Carrera de autos -->
+    <div class="countdown-card">
+        <h2>Carrera contra el tiempo</h2>
+        <p>El auto avanza según lo cerca que esté el Hot Sale</p>
+        
+        <div class="race-track">
+            <div class="race-car" id="race-car">🏎️</div>
+            <div class="race-flag">🏁</div>
+        </div>
+        <div style="text-align: center;" id="race-text">Faltan 00 días para la meta</div>
+        
+        <script>
+            const raceCar = document.getElementById('race-car');
+            const raceText = document.getElementById('race-text');
+            const maxDays = 60; // Máximo días para la animación
+            
+            function updateRace(days, hours, minutes, seconds) {
+                const progress = 1 - Math.min(days, maxDays) / maxDays;
+                raceCar.style.left = `${progress * 90}%`;
+                raceText.textContent = `Faltan ${days} días para la meta`;
+            }
+            
+            countdownManager.addInstance(updateRace);
+        </script>
+    </div>
+
+    <!-- Countdown 3: Corazón latiendo -->
+<div class="countdown-card">
+    <h2>Latido del Hot Sale</h2>
+    <p>El corazón late más rápido a medida que se acerca la fecha</p>
+    
+    <div class="heart-container">
+        <div class="heart" id="heart">❤️</div>
+    </div>
+    <div style="text-align: center;" id="heart-text">Faltan 00 días</div>
+    
+    <script>
+        const heart = document.getElementById('heart');
+        const heartText = document.getElementById('heart-text');
+        
+        function updateHeart(days, hours, minutes, seconds) {
+            heartText.textContent = `Faltan ${days} días`;
+            
+            // Ajustar velocidad del latido según proximidad
+            let speed;
+            if (days > 30) {
+                speed = '1.5s';
+            } else if (days > 7) {
+                speed = '1s';
+            } else if (days > 1) {
+                speed = '0.7s';
+            } else {
+                speed = '0.5s';
+            }
+            
+            heart.style.animationDuration = speed;
+            
+            // Cambiar color cuando faltan menos de 3 días
+            if (days < 3) {
+                heart.style.color = '#ff0000';
+                heart.style.textShadow = '0 0 10px rgba(255,0,0,0.7)';
+            }
+        }
+        
+        countdownManager.addInstance(updateHeart);
+    </script>
+</div>
+
+  <!-- Countdown 4: Globo que se infla -->
+<div class="countdown-card">
+    <h2>Globo de Ofertas</h2>
+    <p>El globo se infla con las ofertas que vienen</p>
+    
+    <div class="balloon-container">
+        <div class="balloon" id="balloon">
+            <div class="balloon-string"></div>
+        </div>
+    </div>
+    <div style="text-align: center;" id="balloon-text">Ofertas creciendo en 00 días</div>
+    
+    <script>
+        const balloon = document.getElementById('balloon');
+        const balloonText = document.getElementById('balloon-text');
+        
+        function updateBalloon(days) {
+            const size = 100 + (60 - Math.min(days, 60));
+            balloon.style.width = `${size}px`;
+            balloon.style.height = `${size}px`;
+            balloonText.textContent = `Ofertas creciendo en ${days} días`;
+        }
+        
+        countdownManager.addInstance(updateBalloon);
+    </script>
+</div>
+
+<!-- Countdown 5: Huida de fantasmas -->
+<div class="countdown-card">
+    <h2>Fantasmas de las Ofertas</h2>
+    <p>Los fantasmas huyen cuando llegan las ofertas</p>
+    
+    <div class="ghost-container" id="ghost-container">
+        <!-- Fantasmas se generan dinámicamente -->
+    </div>
+    <div style="text-align: center;" id="ghost-text">Los fantasmas huyen en 00 días</div>
+    
+    <script>
+        const ghostContainer = document.getElementById('ghost-container');
+        const ghostText = document.getElementById('ghost-text');
+        
+        function createGhosts() {
+            for (let i = 0; i < 5; i++) {
+                const ghost = document.createElement('div');
+                ghost.className = 'ghost';
+                ghost.textContent = '👻';
+                ghost.style.left = `${10 + i * 20}%`;
+                ghost.style.animationDelay = `${i * 0.5}s`;
+                ghostContainer.appendChild(ghost);
+            }
+        }
+        
+        function updateGhosts(days) {
+            ghostText.textContent = `Los fantasmas huyen en ${days} días`;
+            
+            const ghosts = document.querySelectorAll('.ghost');
+            ghosts.forEach((ghost, i) => {
+                const progress = Math.min(days, 30) / 30;
+                ghost.style.left = `${10 + i * 20 * (1 - progress)}%`;
+            });
+        }
+        
+        createGhosts();
+        countdownManager.addInstance(updateGhosts);
+    </script>
+</div>
+
+<!-- Countdown 6: Línea de tiempo -->
+<div class="countdown-card">
+    <h2>Línea del Tiempo</h2>
+    <p>Visualización progresiva hasta el Hot Sale</p>
+    
+    <div class="timeline">
+        <div class="timeline-progress" id="timeline-progress"></div>
+        <div class="timeline-marker" style="left: 0%;">Hoy</div>
+        <div class="timeline-marker" style="left: 100%;">Hot Sale</div>
+        <div class="timeline-now" id="timeline-now">00</div>
+    </div>
+    <div style="text-align: center; margin-top: 40px;" id="timeline-text">Faltan 00 días</div>
+    
+    <script>
+        const timelineProgress = document.getElementById('timeline-progress');
+        const timelineNow = document.getElementById('timeline-now');
+        const timelineText = document.getElementById('timeline-text');
+        const startDate = new Date('2025-01-01');
+        const endDate = new Date('2025-05-12');
+        const totalDays = dateFns.differenceInDays(endDate, startDate);
+        
+        function updateTimeline(days) {
+            const elapsedDays = totalDays - days;
+            const progress = (elapsedDays / totalDays) * 100;
+            
+            timelineProgress.style.width = `${progress}%`;
+            timelineNow.style.left = `${progress}%`;
+            timelineNow.textContent = days;
+            timelineText.textContent = `Faltan ${days} días`;
+        }
+        
+        countdownManager.addInstance(updateTimeline);
+    </script>
+</div>
+
+<!-- Iniciar todos los countdowns -->
+<script>
+    countdownManager.start();
+</script>
+</body>
+</html>
