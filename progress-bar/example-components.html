@@ -1,0 +1,1292 @@
+<!--
+Casos de Uso para cada Componente
+  Rastreador de Pedido: Para que los clientes vean el estado de su envío (confirmado, preparando, en camino, entregado).
+  Tarjeta de Producto: Para mostrar productos en el catálogo con selector de cantidad y botón de añadir al carrito.
+  Indicador de Stock: Para mostrar niveles de inventario en backoffice o en páginas de producto.
+  Tarjeta de Envío: Resumen de información de envío para logística o para el área de cliente.
+  Lista de Picking: Interfaz para preparación de pedidos en el almacén, marcando items como completados.
+  Selector de Envío: Durante el checkout para que los clientes elijan su método de envío preferido.
+  Resumen de Carrito: Resumen claro del pedido antes del pago con desglose de costos.
+  Filtros de Productos: Para refinar búsquedas en el catálogo por categoría, precio, tallas, etc.
+  Dashboard de Pedidos: Vista resumida para el equipo de operaciones con estadísticas y lista de pedidos.
+  Notificación: Alertas para el equipo interno sobre eventos importantes como stock bajo.
+
+IMPORTANTE: Cada componente está listo para copiar y usar con mínima adaptación, con estilos elegantes y funcionalidad básica implementada.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Componentes UX para Ecommerce</title>
+    <style>
+        /* Estilos base */
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        .component {
+            margin: 40px 0;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        /* Componente 1: Estado del pedido para cliente */
+        .order-tracker {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 30px 0;
+            padding: 0 20px;
+        }
+        
+        .order-tracker::before {
+            content: "";
+            position: absolute;
+            top: 14px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+        
+        .tracker-progress {
+            position: absolute;
+            top: 14px;
+            left: 0;
+            height: 4px;
+            background-color: #27ae60;
+            z-index: 2;
+            transition: width 0.5s ease;
+        }
+        
+        .tracker-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 3;
+            width: 24%;
+        }
+        
+        .step-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 8px;
+            position: relative;
+        }
+        
+        .tracker-step.active .step-icon,
+        .tracker-step.completed .step-icon {
+            background-color: #27ae60;
+            color: white;
+        }
+        
+        .tracker-step.completed .step-icon::after {
+            content: "✓";
+            font-size: 16px;
+        }
+        
+        .step-label {
+            font-size: 13px;
+            color: #777;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .tracker-step.active .step-label,
+        .tracker-step.completed .step-label {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .step-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+            font-style: italic;
+        }
+        
+        /* Componente 2: Tarjeta de producto con contador */
+        .product-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            max-width: 280px;
+            background: white;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            height: 180px;
+            background-color: #f5f5f5;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .product-info {
+            padding: 16px;
+        }
+        
+        .product-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: #2c3e50;
+        }
+        
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #e74c3c;
+            margin-bottom: 12px;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        
+        .quantity-btn {
+            background: none;
+            border: none;
+            width: 32px;
+            height: 32px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+        }
+        
+        .quantity-btn:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            border: none;
+            font-weight: 600;
+        }
+        
+        .add-to-cart {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #2980b9;
+        }
+        
+        /* Componente 3: Indicador de inventario */
+        .stock-indicator {
+            margin: 20px 0;
+        }
+        
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+        
+        .stock-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .stock-value {
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        .stock-bar {
+            height: 8px;
+            background-color: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .stock-progress {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+        
+        .stock-low .stock-progress {
+            background-color: #e74c3c;
+        }
+        
+        .stock-medium .stock-progress {
+            background-color: #f39c12;
+        }
+        
+        .stock-high .stock-progress {
+            background-color: #27ae60;
+        }
+        
+        .stock-message {
+            font-size: 12px;
+            color: #777;
+            margin-top: 4px;
+            font-style: italic;
+        }
+        
+        /* Componente 4: Tarjeta de envío */
+        .shipping-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 18px;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .shipping-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .shipping-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 0;
+        }
+        
+        .shipping-badge {
+            background-color: #3498db;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .shipping-details {
+            display: flex;
+            margin-top: 12px;
+        }
+        
+        .shipping-icon {
+            margin-right: 12px;
+            color: #7f8c8d;
+        }
+        
+        .shipping-info {
+            flex-grow: 1;
+        }
+        
+        .shipping-address {
+            margin: 0;
+            line-height: 1.5;
+            color: #555;
+        }
+        
+        .shipping-meta {
+            display: flex;
+            margin-top: 10px;
+            font-size: 13px;
+            color: #777;
+        }
+        
+        .shipping-meta span {
+            margin-right: 15px;
+        }
+        
+        .shipping-actions {
+            margin-top: 15px;
+            text-align: right;
+        }
+        
+        .track-btn {
+            background: none;
+            border: 1px solid #3498db;
+            color: #3498db;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .track-btn:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        /* Componente 5: Proceso de picking */
+        .picking-container {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .picking-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .picking-title {
+            margin: 0;
+            color: #2c3e50;
+        }
+        
+        .picking-progress {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .picking-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .picking-item {
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .picking-item.completed {
+            border-left: 4px solid #27ae60;
+        }
+        
+        .picking-item.pending {
+            border-left: 4px solid #f39c12;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            margin: 0 0 8px 0;
+        }
+        
+        .item-sku {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin: 0 0 8px 0;
+        }
+        
+        .item-location {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        
+        .item-location svg {
+            margin-right: 6px;
+        }
+        
+        .item-quantity {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+        }
+        
+        .quantity-needed {
+            font-weight: 600;
+        }
+        
+        .check-btn {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        /* Componente 6: Selector de método de envío */
+        .shipping-methods {
+            margin: 20px 0;
+        }
+        
+        .method-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .method-option:hover {
+            border-color: #3498db;
+        }
+        
+        .method-option.selected {
+            border-color: #3498db;
+            background-color: #f0f7fd;
+        }
+        
+        .method-radio {
+            margin-right: 15px;
+        }
+        
+        .method-info {
+            flex-grow: 1;
+        }
+        
+        .method-name {
+            font-weight: 600;
+            margin: 0 0 5px 0;
+        }
+        
+        .method-details {
+            font-size: 13px;
+            color: #555;
+            margin: 0;
+        }
+        
+        .method-price {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-left: 15px;
+        }
+        
+        /* Componente 7: Resumen de carrito */
+        .cart-summary {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .summary-title {
+            margin: 0 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            color: #2c3e50;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .summary-label {
+            color: #555;
+        }
+        
+        .summary-value {
+            font-weight: 600;
+        }
+        
+        .summary-total {
+            border-top: 1px solid #eee;
+            padding-top: 12px;
+            margin-top: 12px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #c0392b;
+        }
+        
+        /* Componente 8: Filtros de productos */
+        .filters-panel {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-section {
+            margin-bottom: 20px;
+        }
+        
+        .filter-title {
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            color: #2c3e50;
+        }
+        
+        .filter-options {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .filter-option {
+            margin-bottom: 8px;
+        }
+        
+        .filter-option label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .filter-option input {
+            margin-right: 8px;
+        }
+        
+        .price-range {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .price-input {
+            width: 45%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* Componente 9: Dashboard de pedidos */
+        .orders-dashboard {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .orders-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .orders-title {
+            margin: 0;
+            color: #2c3e50;
+        }
+        
+        .orders-stats {
+            display: flex;
+        }
+        
+        .stat-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-left: 10px;
+            text-align: center;
+            min-width: 80px;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            font-size: 18px;
+            margin: 0;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin: 4px 0 0 0;
+        }
+        
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .orders-table th {
+            text-align: left;
+            padding: 12px;
+            background-color: #f1f1f1;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .orders-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .order-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: #fff4e5;
+            color: #e67e22;
+        }
+        
+        .status-processing {
+            background-color: #e5f3ff;
+            color: #3498db;
+        }
+        
+        .status-shipped {
+            background-color: #e5f7ee;
+            color: #27ae60;
+        }
+        
+        .status-cancelled {
+            background-color: #fee;
+            color: #e74c3c;
+        }
+        
+        /* Componente 10: Notificación de backoffice */
+        .alert-notification {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .alert-icon {
+            margin-right: 15px;
+            color: #ff9800;
+            font-size: 20px;
+        }
+        
+        .alert-content {
+            flex-grow: 1;
+        }
+        
+        .alert-title {
+            margin: 0 0 5px 0;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .alert-message {
+            margin: 0;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .alert-close {
+            margin-left: 15px;
+            cursor: pointer;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <h1>Componentes UX para Ecommerce & Logística</h1>
+    
+    <!-- Componente 1: Estado del pedido para cliente -->
+    <div class="component">
+        <h2>1. Rastreador de Pedido (Customer)</h2>
+        <p>Visualización elegante del estado del pedido para el cliente.</p>
+        
+        <div class="order-tracker" id="orderTracker">
+            <div class="tracker-progress" style="width: 75%;"></div>
+            
+            <div class="tracker-step completed">
+                <div class="step-icon"></div>
+                <span class="step-label">Confirmado</span>
+                <span class="step-time">15 Oct, 10:30</span>
+            </div>
+            
+            <div class="tracker-step completed">
+                <div class="step-icon"></div>
+                <span class="step-label">Preparando</span>
+                <span class="step-time">15 Oct, 11:45</span>
+            </div>
+            
+            <div class="tracker-step active">
+                <div class="step-icon"></div>
+                <span class="step-label">En camino</span>
+                <span class="step-time">16 Oct, 09:15</span>
+            </div>
+            
+            <div class="tracker-step">
+                <div class="step-icon"></div>
+                <span class="step-label">Entregado</span>
+                <span class="step-time">Estimado: 17 Oct</span>
+            </div>
+        </div>
+        
+        <script>
+            // Componente 1: Rastreador de pedido
+            function updateOrderStatus(tracker, stepIndex) {
+                const steps = tracker.querySelectorAll('.tracker-step');
+                const progress = tracker.querySelector('.tracker-progress');
+                
+                // Calcular porcentaje de progreso
+                const progressPercent = (stepIndex / (steps.length - 1)) * 100;
+                
+                steps.forEach((step, index) => {
+                    step.classList.remove('active', 'completed');
+                    
+                    if (index < stepIndex) {
+                        step.classList.add('completed');
+                    } else if (index === stepIndex) {
+                        step.classList.add('active');
+                    }
+                });
+                
+                progress.style.width = `${progressPercent}%`;
+            }
+            
+            // Ejemplo: Marcar el paso 2 como activo (index 1)
+            // updateOrderStatus(document.getElementById('orderTracker'), 2);
+        </script>
+    </div>
+    
+    <!-- Componente 2: Tarjeta de producto con contador -->
+    <div class="component">
+        <h2>2. Tarjeta de Producto (Frontend)</h2>
+        <p>Tarjeta de producto con selector de cantidad y botón de añadir al carrito.</p>
+        
+        <div class="product-card">
+            <div class="product-image" style="background-image: url('https://via.placeholder.com/300')"></div>
+            <div class="product-info">
+                <h3 class="product-title">Zapatillas Running Pro</h3>
+                <div class="product-price">$89.99</div>
+                <div class="product-actions">
+                    <div class="quantity-control">
+                        <button class="quantity-btn minus">-</button>
+                        <input type="text" class="quantity-input" value="1" readonly>
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                    <button class="add-to-cart">Añadir</button>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // Componente 2: Tarjeta de producto
+            document.addEventListener('DOMContentLoaded', function() {
+                const quantityInput = document.querySelector('.quantity-input');
+                const minusBtn = document.querySelector('.quantity-btn.minus');
+                const plusBtn = document.querySelector('.quantity-btn.plus');
+                const addToCartBtn = document.querySelector('.add-to-cart');
+                
+                let quantity = 1;
+                
+                minusBtn.addEventListener('click', function() {
+                    if (quantity > 1) {
+                        quantity--;
+                        quantityInput.value = quantity;
+                    }
+                });
+                
+                plusBtn.addEventListener('click', function() {
+                    quantity++;
+                    quantityInput.value = quantity;
+                });
+                
+                addToCartBtn.addEventListener('click', function() {
+                    alert(`Añadido ${quantity} producto(s) al carrito`);
+                    // Aquí iría la lógica para añadir al carrito
+                });
+            });
+        </script>
+    </div>
+    
+    <!-- Componente 3: Indicador de inventario -->
+    <div class="component">
+        <h2>3. Indicador de Stock (Backoffice)</h2>
+        <p>Visualización clara del nivel de inventario con colores intuitivos.</p>
+        
+        <div class="stock-indicator stock-medium">
+            <div class="stock-header">
+                <span class="stock-title">Disponibilidad:</span>
+                <span class="stock-value">12/25</span>
+            </div>
+            <div class="stock-bar">
+                <div class="stock-progress" style="width: 48%;"></div>
+            </div>
+            <div class="stock-message">Quedan 12 unidades en stock</div>
+        </div>
+        
+        <script>
+            // Componente 3: Indicador de stock
+            function updateStockIndicator(indicator, current, max) {
+                const percentage = (current / max) * 100;
+                const stockValue = indicator.querySelector('.stock-value');
+                const stockProgress = indicator.querySelector('.stock-progress');
+                const stockMessage = indicator.querySelector('.stock-message');
+                
+                // Actualizar valores
+                stockValue.textContent = `${current}/${max}`;
+                stockProgress.style.width = `${percentage}%`;
+                stockMessage.textContent = `Quedan ${current} unidades en stock`;
+                
+                // Actualizar clase según nivel
+                indicator.classList.remove('stock-low', 'stock-medium', 'stock-high');
+                
+                if (percentage < 25) {
+                    indicator.classList.add('stock-low');
+                } else if (percentage < 75) {
+                    indicator.classList.add('stock-medium');
+                } else {
+                    indicator.classList.add('stock-high');
+                }
+            }
+            
+            // Ejemplo: Actualizar a 5 de 30
+            // updateStockIndicator(document.querySelector('.stock-indicator'), 5, 30);
+        </script>
+    </div>
+    
+    <!-- Componente 4: Tarjeta de envío -->
+    <div class="component">
+        <h2>4. Tarjeta de Envío (Logística)</h2>
+        <p>Resumen de información de envío con estado y acciones.</p>
+        
+        <div class="shipping-card">
+            <div class="shipping-header">
+                <h3 class="shipping-title">Envío #ORD-2023-4567</h3>
+                <span class="shipping-badge">En camino</span>
+            </div>
+            <div class="shipping-details">
+                <div class="shipping-icon">🚚</div>
+                <div class="shipping-info">
+                    <p class="shipping-address">
+                        Juan Pérez<br>
+                        Calle Falsa 123, 3B<br>
+                        Madrid, 28001, España
+                    </p>
+                    <div class="shipping-meta">
+                        <span>Transportista: DHL</span>
+                        <span>Nº seguimiento: 3456789012</span>
+                    </div>
+                </div>
+            </div>
+            <div class="shipping-actions">
+                <button class="track-btn">Rastrear envío</button>
+            </div>
+        </div>
+        
+        <script>
+            // Componente 4: Tarjeta de envío
+            document.querySelector('.track-btn').addEventListener('click', function() {
+                alert('Redirigiendo a la página de seguimiento de DHL');
+                // Aquí iría la lógica para rastrear el envío
+            });
+        </script>
+    </div>
+    
+    <!-- Componente 5: Proceso de picking -->
+    <div class="component">
+        <h2>5. Lista de Picking (Almacén)</h2>
+        <p>Interfaz para el proceso de preparación de pedidos en el almacén.</p>
+        
+        <div class="picking-container">
+            <div class="picking-header">
+                <h3 class="picking-title">Orden de Picking #PICK-456</h3>
+                <div class="picking-progress">2/5 items</div>
+            </div>
+            <div class="picking-items">
+                <div class="picking-item completed">
+                    <h4 class="item-name">Zapatillas Running Pro</h4>
+                    <p class="item-sku">SKU: ZRP-BLK-42</p>
+                    <div class="item-location">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Pasillo B, Estante 4
+                    </div>
+                    <div class="item-quantity">
+                        <span class="quantity-needed">Cantidad: 1</span>
+                        <button class="check-btn">✓</button>
+                    </div>
+                </div>
+                <div class="picking-item completed">
+                    <h4 class="item-name">Calcetines Técnicos</h4>
+                    <p class="item-sku">SKU: CT-XL-WHT</p>
+                    <div class="item-location">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Pasillo A, Estante 2
+                    </div>
+                    <div class="item-quantity">
+                        <span class="quantity-needed">Cantidad: 2</span>
+                        <button class="check-btn">✓</button>
+                    </div>
+                </div>
+                <div class="picking-item pending">
+                    <h4 class="item-name">Riñonera Deportiva</h4>
+                    <p class="item-sku">SKU: RD-BLK</p>
+                    <div class="item-location">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Pasillo C, Estante 1
+                    </div>
+                    <div class="item-quantity">
+                        <span class="quantity-needed">Cantidad: 1</span>
+                        <button class="check-btn">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            // Componente 5: Proceso de picking
+            document.querySelectorAll('.check-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const item = this.closest('.picking-item');
+                    if (item.classList.contains('pending')) {
+                        item.classList.remove('pending');
+                        item.classList.add('completed');
+                        this.textContent = '✓';
+                        // Aquí iría la lógica para marcar como completado
+                    }
+                });
+            });
+        </script>
+    </div>
+    
+    <!-- Componente 6: Selector de método de envío -->
+    <div class="component">
+        <h2>6. Selector de Envío (Checkout)</h2>
+        <p>Interfaz para que los clientes elijan su método de envío preferido.</p>
+        
+        <div class="shipping-methods">
+            <div class="method-option selected">
+                <div class="method-radio">
+                    <input type="radio" name="shipping" checked>
+                </div>
+                <div class="method-info">
+                    <h4 class="method-name">Envío Estándar</h4>
+                    <p class="method-details">Entrega en 3-5 días laborables</p>
+                </div>
+                <div class="method-price">$5.99</div>
+            </div>
+            
+            <div class="method-option">
+                <div class="method-radio">
+                    <input type="radio" name="shipping">
+                </div>
+                <div class="method-info">
+                    <h4 class="method-name">Envío Express</h4>
+                    <p class="method-details">Entrega en 1-2 días laborables</p>
+                </div>
+                <div class="method-price">$12.99</div>
+            </div>
+            
+            <div class="method-option">
+                <div class="method-radio">
+                    <input type="radio" name="shipping">
+                </div>
+                <div class="method-info">
+                    <h4 class="method-name">Recogida en Tienda</h4>
+                    <p class="method-details">Recoge tu pedido cuando esté listo</p>
+                </div>
+                <div class="method-price">Gratis</div>
+            </div>
+        </div>
+        
+        <script>
+            // Componente 6: Selector de método de envío
+            document.querySelectorAll('.method-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.method-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    this.querySelector('input').checked = true;
+                });
+            });
+        </script>
+    </div>
+    
+    <!-- Componente 7: Resumen de carrito -->
+    <div class="component">
+        <h2>7. Resumen de Carrito (Checkout)</h2>
+        <p>Resumen claro del pedido con desglose de costos antes del pago.</p>
+        
+        <div class="cart-summary">
+            <h3 class="summary-title">Resumen del Pedido</h3>
+            
+            <div class="summary-row">
+                <span class="summary-label">Subtotal (3 productos)</span>
+                <span class="summary-value">$127.97</span>
+            </div>
+            
+            <div class="summary-row">
+                <span class="summary-label">Envío</span>
+                <span class="summary-value">$5.99</span>
+            </div>
+            
+            <div class="summary-row">
+                <span class="summary-label">Descuento</span>
+                <span class="summary-value">-$10.00</span>
+            </div>
+            
+            <div class="summary-row summary-total">
+                <span class="summary-label">Total</span>
+                <span class="summary-value">$123.96</span>
+            </div>
+            
+            <button class="checkout-btn">Proceder al Pago</button>
+        </div>
+        
+        <script>
+            // Componente 7: Resumen de carrito
+            document.querySelector('.checkout-btn').addEventListener('click', function() {
+                alert('Redirigiendo al proceso de pago');
+                // Aquí iría la lógica para proceder al pago
+            });
+        </script>
+    </div>
+    
+    <!-- Componente 8: Filtros de productos -->
+    <div class="component">
+        <h2>8. Filtros de Productos (Catálogo)</h2>
+        <p>Panel de filtros para refinar la búsqueda de productos.</p>
+        
+        <div class="filters-panel">
+            <div class="filter-section">
+                <h4 class="filter-title">Categorías</h4>
+                <ul class="filter-options">
+                    <li class="filter-option">
+                        <label>
+                            <input type="checkbox" checked> Zapatillas
+                        </label>
+                    </li>
+                    <li class="filter-option">
+                        <label>
+                            <input type="checkbox"> Ropa
+                        </label>
+                    </li>
+                    <li class="filter-option">
+                        <label>
+                            <input type="checkbox"> Accesorios
+                        </label>
+                    </li>
+                    <li class="filter-option">
+                        <label>
+                            <input type="checkbox"> Equipamiento
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="filter-section">
+                <h4 class="filter-title">Precio</h4>
+                <div class="price-range">
+                    <input type="number" class="price-input" placeholder="Mínimo" value="0">
+                    <span>-</span>
+                    <input type="number" class="price-input" placeholder="Máximo" value="200">
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h4 class="filter-title">Tallas</h4>
+                <ul class="filter-options">
+                    <li class="filter-option">
+                        <label>
+                            <input type="checkbox"> 38
+                        </label>
+                    </li>
+                    <li class="filter-option">
+                        <label>
+                            <input type="checkbox"> 39
+                        </label>
+                    </li>
+                    <li class="filter-option">
+                        <label>
+                            <input type="checkbox"> 40
+                        </label>
+                    </li>
+                    <li class="filter-option">
+                        <label>
+                            <input type="checkbox"> 41
+                        </label>
+                    </li>
+                    <li class="filter-option">
+                        <label>
+                            <input type="checkbox"> 42
+                        </label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <script>
+            // Componente 8: Filtros de productos
+            document.querySelectorAll('.filter-option input').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    // Aquí iría la lógica para aplicar los filtros
+                    console.log('Filtros actualizados');
+                });
+            });
+            
+            document.querySelectorAll('.price-input').forEach(input => {
+                input.addEventListener('change', function() {
+                    // Aquí iría la lógica para filtrar por precio
+                    console.log('Rango de precio actualizado');
+                });
+            });
+        </script>
+    </div>
+    
+    <!-- Componente 9: Dashboard de pedidos -->
+    <div class="component">
+        <h2>9. Dashboard de Pedidos (Backoffice)</h2>
+        <p>Vista resumida de los pedidos para el equipo de operaciones.</p>
+        
+        <div class="orders-dashboard">
+            <div class="orders-header">
+                <h3 class="orders-title">Pedidos Recientes</h3>
+                <div class="orders-stats">
+                    <div class="stat-card">
+                        <p class="stat-value">24</p>
+                        <p class="stat-label">Hoy</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="stat-value">5</p>
+                        <p class="stat-label">Pendientes</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="stat-value">$1,245</p>
+                        <p class="stat-label">Ingresos</p>
+                    </div>
+                </div>
+            </div>
+            
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Nº Pedido</th>
+                        <th>Cliente</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#ORD-4567</td>
+                        <td>Juan Pérez</td>
+                        <td>15 Oct 2023</td>
+                        <td>$89.99</td>
+                        <td><span class="order-status status-processing">Procesando</span></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-4566</td>
+                        <td>María Gómez</td>
+                        <td>15 Oct 2023</td>
+                        <td>$127.97</td>
+                        <td><span class="order-status status-shipped">Enviado</span></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-4565</td>
+                        <td>Carlos Ruiz</td>
+                        <td>14 Oct 2023</td>
+                        <td>$45.50</td>
+                        <td><span class="order-status status-pending">Pendiente</span></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-4564</td>
+                        <td>Ana López</td>
+                        <td>14 Oct 2023</td>
+                        <td>$210.00</td>
+                        <td><span class="order-status status-cancelled">Cancelado</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <script>
+            // Componente 9: Dashboard de pedidos
+            // Aquí normalmente se haría una llamada API para obtener los datos reales
+            // Este es un ejemplo estático
+        </script>
+    </div>
+    
+    <!-- Componente 10: Notificación de backoffice -->
+    <div class="component">
+        <h2>10. Notificación (Backoffice)</h2>
+        <p>Alertas elegantes para el equipo interno sobre eventos importantes.</p>
+        
+        <div class="alert-notification">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-content">
+                <h4 class="alert-title">Stock bajo en productos</h4>
+                <p class="alert-message">5 productos tienen menos de 10 unidades en stock. Por favor, revisa el inventario.</p>
+            </div>
+            <div class="alert-close">×</div>
+        </div>
+        
+        <script>
+            // Componente 10: Notificación
+            document.querySelector('.alert-close').addEventListener('click', function() {
+                this.closest('.alert-notification').style.display = 'none';
+            });
+        </script>
+    </div>
+</body>
+</html>
