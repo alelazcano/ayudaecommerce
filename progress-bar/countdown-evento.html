@@ -1,0 +1,484 @@
+<!--
+  Las cuentas regresivas anticipan un evento: puede ser una fecha de alto tráfico, inicio/fin de temporada, previa de un aniversario o lanzamiento.
+  Todos los ejemplos podés usarlos por separado, recortando el fragmento que corresponde a cada uno y haciendo pequeños ajustes.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdowns Hot Sale 2025</title>
+    <style>
+        /* Estilos base minimalistas */
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.5;
+        }
+        
+        .countdown-container {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+        }
+        
+        h3 {
+            margin-top: 0;
+            color: #d32f2f;
+        }
+        
+        /* Countdown 1: Clásico numérico */
+        .countdown-classic {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            text-align: center;
+        }
+        
+        .countdown-classic .unit {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            min-width: 60px;
+        }
+        
+        .countdown-classic .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+        
+        .countdown-classic .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #666;
+        }
+        
+        /* Countdown 2: Barra de progreso */
+        .countdown-progress {
+            margin-top: 15px;
+        }
+        
+        .progress-container {
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #f57c00, #d32f2f);
+            width: 0%;
+            transition: width 1s linear;
+        }
+        
+        /* Countdown 3: Tarjetas animadas */
+        .countdown-cards {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            perspective: 1000px;
+        }
+        
+        .countdown-card {
+            width: 50px;
+            height: 70px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        
+        .countdown-card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            background: #d32f2f;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .countdown-card-back {
+            background: #b71c1c;
+            transform: rotateY(180deg);
+        }
+        
+        /* Countdown 4: Texto dinámico */
+        .countdown-text {
+            font-size: 18px;
+            text-align: center;
+            padding: 15px;
+            background: #fff3e0;
+            border-radius: 5px;
+        }
+        
+        .highlight {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        
+        /* Countdown 5: Círculo SVG */
+        .countdown-svg {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        
+        .svg-circle {
+            width: 100px;
+            height: 100px;
+        }
+        
+        .circle-bg {
+            fill: none;
+            stroke: #f0f0f0;
+            stroke-width: 8;
+        }
+        
+        .circle-progress {
+            fill: none;
+            stroke: #d32f2f;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+        }
+        
+        .circle-text {
+            font-size: 24px;
+            font-weight: bold;
+            fill: #d32f2f;
+        }
+        
+        /* Countdown 6: Fuego simbólico */
+        .countdown-fire {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .fire-container {
+            display: inline-block;
+            position: relative;
+            height: 80px;
+            width: 60px;
+        }
+        
+        .fire {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 0;
+            background: linear-gradient(to top, #ff5722, #ffc107);
+            border-radius: 0 0 20px 20px;
+            transition: height 0.5s;
+        }
+        
+        .fire-text {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <h2>Countdowns para Hot Sale 2025 (12-14 Mayo)</h2>
+    
+    <!-- Countdown 1: Clásico numérico -->
+    <div class="countdown-container">
+        <h3>1. Countdown Clásico</h3>
+        <p>Cuenta regresiva numérica tradicional con días, horas, minutos y segundos.</p>
+        
+        <div class="countdown-classic">
+            <div class="unit">
+                <div class="value" id="days1">00</div>
+                <div class="label">Días</div>
+            </div>
+            <div class="unit">
+                <div class="value" id="hours1">00</div>
+                <div class="label">Horas</div>
+            </div>
+            <div class="unit">
+                <div class="value" id="minutes1">00</div>
+                <div class="label">Minutos</div>
+            </div>
+            <div class="unit">
+                <div class="value" id="seconds1">00</div>
+                <div class="label">Segundos</div>
+            </div>
+        </div>
+        
+        <script>
+            // Configurar fecha objetivo (12 Mayo 2025 00:00:00 GMT-3)
+            const hotSaleDate1 = new Date('May 12, 2025 00:00:00 GMT-0300').getTime();
+            
+            function updateCountdown1() {
+                const now = new Date().getTime();
+                const diff = hotSaleDate1 - now;
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('days1').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours1').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes1').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds1').textContent = seconds.toString().padStart(2, '0');
+            }
+            
+            updateCountdown1();
+            setInterval(updateCountdown1, 1000);
+        </script>
+    </div>
+    
+    <!-- Countdown 2: Barra de progreso -->
+    <div class="countdown-container">
+        <h3>2. Barra de Progreso</h3>
+        <p>Visualización del tiempo restante como una barra que se llena progresivamente.</p>
+        
+        <div class="countdown-progress">
+            <div>Faltan: <span id="time-left2"></span> para el Hot Sale</div>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar2"></div>
+            </div>
+            <div style="text-align: right; font-size: 12px;">12 Mayo 2025</div>
+        </div>
+        
+        <script>
+            const hotSaleDate2 = new Date('May 12, 2025 00:00:00 GMT-0300').getTime();
+            const totalDuration = hotSaleDate2 - new Date('Jan 1, 2025 00:00:00 GMT-0300').getTime();
+            
+            function updateCountdown2() {
+                const now = new Date().getTime();
+                const diff = hotSaleDate2 - now;
+                const percentage = 100 - (diff / totalDuration * 100);
+                
+                document.getElementById('progress-bar2').style.width = `${percentage}%`;
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('time-left2').textContent = `${days} días`;
+            }
+            
+            updateCountdown2();
+            setInterval(updateCountdown2, 1000);
+        </script>
+    </div>
+    
+    <!-- Countdown 3: Tarjetas animadas -->
+    <div class="countdown-container">
+        <h3>3. Tarjetas Flip</h3>
+        <p>Efecto de tarjetas que giran al cambiar los números, visualmente atractivo.</p>
+        
+        <div class="countdown-cards">
+            <div class="countdown-card" id="days-card">
+                <div class="countdown-card-face" id="days-front">00</div>
+                <div class="countdown-card-back" id="days-back">00</div>
+            </div>
+            <div style="align-self: center; font-size: 24px; color: #d32f2f;">:</div>
+            <div class="countdown-card" id="hours-card">
+                <div class="countdown-card-face" id="hours-front">00</div>
+                <div class="countdown-card-back" id="hours-back">00</div>
+            </div>
+            <div style="align-self: center; font-size: 24px; color: #d32f2f;">:</div>
+            <div class="countdown-card" id="minutes-card">
+                <div class="countdown-card-face" id="minutes-front">00</div>
+                <div class="countdown-card-back" id="minutes-back">00</div>
+            </div>
+            <div style="align-self: center; font-size: 24px; color: #d32f2f;">:</div>
+            <div class="countdown-card" id="seconds-card">
+                <div class="countdown-card-face" id="seconds-front">00</div>
+                <div class="countdown-card-back" id="seconds-back">00</div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 10px; font-size: 12px; color: #666;">
+            Días : Horas : Minutos : Segundos
+        </div>
+        
+        <script>
+            const hotSaleDate3 = new Date('May 12, 2025 00:00:00 GMT-0300').getTime();
+            let currentDays, currentHours, currentMinutes, currentSeconds;
+            
+            function updateCountdown3() {
+                const now = new Date().getTime();
+                const diff = hotSaleDate3 - now;
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                if (days !== currentDays) {
+                    flipCard('days-card', 'days-front', 'days-back', days);
+                    currentDays = days;
+                }
+                if (hours !== currentHours) {
+                    flipCard('hours-card', 'hours-front', 'hours-back', hours);
+                    currentHours = hours;
+                }
+                if (minutes !== currentMinutes) {
+                    flipCard('minutes-card', 'minutes-front', 'minutes-back', minutes);
+                    currentMinutes = minutes;
+                }
+                if (seconds !== currentSeconds) {
+                    flipCard('seconds-card', 'seconds-front', 'seconds-back', seconds);
+                    currentSeconds = seconds;
+                }
+            }
+            
+            function flipCard(cardId, frontId, backId, newValue) {
+                const card = document.getElementById(cardId);
+                const front = document.getElementById(frontId);
+                const back = document.getElementById(backId);
+                
+                back.textContent = newValue.toString().padStart(2, '0');
+                card.style.transform = 'rotateY(180deg)';
+                
+                setTimeout(() => {
+                    front.textContent = newValue.toString().padStart(2, '0');
+                    card.style.transform = 'rotateY(0deg)';
+                }, 500);
+            }
+            
+            updateCountdown3();
+            setInterval(updateCountdown3, 1000);
+        </script>
+    </div>
+    
+    <!-- Countdown 4: Texto dinámico -->
+    <div class="countdown-container">
+        <h3>4. Mensaje Dinámico</h3>
+        <p>Texto que cambia según la proximidad del evento, generando urgencia.</p>
+        
+        <div class="countdown-text">
+            <div id="dynamic-text">El Hot Sale 2025 comienza en <span class="highlight" id="countdown-text-value">00 días</span></div>
+            <div style="font-size: 14px; margin-top: 5px;">12-14 Mayo | ¡Prepárate para las mejores ofertas!</div>
+        </div>
+        
+        <script>
+            const hotSaleDate4 = new Date('May 12, 2025 00:00:00 GMT-0300').getTime();
+            const textElement = document.getElementById('dynamic-text');
+            const valueElement = document.getElementById('countdown-text-value');
+            
+            function updateCountdown4() {
+                const now = new Date().getTime();
+                const diff = hotSaleDate4 - now;
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                
+                if (days > 30) {
+                    textElement.innerHTML = `El Hot Sale 2025 comienza en <span class="highlight">${days} días</span>`;
+                } else if (days > 7) {
+                    textElement.innerHTML = `¡Solo <span class="highlight">${days} días</span> para el Hot Sale!`;
+                } else if (days > 1) {
+                    textElement.innerHTML = `¡Quedan <span class="highlight">${days} días</span>! Prepárate`;
+                } else if (days === 1) {
+                    textElement.innerHTML = `¡<span class="highlight">ÚLTIMO DÍA</span> antes del Hot Sale!`;
+                } else {
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    if (hours > 1) {
+                        textElement.innerHTML = `¡Hot Sale comienza en <span class="highlight">${hours} horas</span>!`;
+                    } else {
+                        textElement.textContent = '¡El Hot Sale ya comenzó!';
+                    }
+                }
+            }
+            
+            updateCountdown4();
+            setInterval(updateCountdown4, 1000);
+        </script>
+    </div>
+    
+    <!-- Countdown 5: Círculo SVG -->
+    <div class="countdown-container">
+        <h3>5. Círculo Progresivo</h3>
+        <p>Representación visual del tiempo restante con un círculo que se completa.</p>
+        
+        <div class="countdown-svg">
+            <svg class="svg-circle" viewBox="0 0 100 100">
+                <circle class="circle-bg" cx="50" cy="50" r="45"/>
+                <circle class="circle-progress" cx="50" cy="50" r="45" id="circle-progress"/>
+                <text class="circle-text" x="50" y="55" text-anchor="middle" id="circle-text">00</text>
+            </svg>
+        </div>
+        <div style="text-align: center; font-weight: bold;" id="circle-label">Días restantes</div>
+        
+        <script>
+            const hotSaleDate5 = new Date('May 12, 2025 00:00:00 GMT-0300').getTime();
+            const circle = document.getElementById('circle-progress');
+            const circleText = document.getElementById('circle-text');
+            const circleLabel = document.getElementById('circle-label');
+            
+            function updateCountdown5() {
+                const now = new Date().getTime();
+                const diff = hotSaleDate5 - now;
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                
+                if (days > 30) {
+                    const percentage = (days / 365) * 100;
+                    const dashoffset = 283 - (283 * percentage / 100);
+                    circle.style.strokeDashoffset = dashoffset;
+                    circleText.textContent = days;
+                    circleLabel.textContent = 'Días restantes';
+                } else {
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const percentage = (hours / 24) * 100;
+                    const dashoffset = 283 - (283 * percentage / 100);
+                    circle.style.strokeDashoffset = dashoffset;
+                    circleText.textContent = hours;
+                    circleLabel.textContent = 'Horas restantes';
+                }
+            }
+            
+            updateCountdown5();
+            setInterval(updateCountdown5, 1000);
+        </script>
+    </div>
+    
+    <!-- Countdown 6: Fuego simbólico -->
+    <div class="countdown-container">
+        <h3>6. Llama de Urgencia</h3>
+        <p>Visualización metafórica donde el fuego crece a medida que se acerca la fecha.</p>
+        
+        <div class="countdown-fire">
+            <div class="fire-container">
+                <div class="fire" id="fire-element"></div>
+            </div>
+            <div class="fire-text" id="fire-text">Faltan 00 días</div>
+        </div>
+        
+        <script>
+            const hotSaleDate6 = new Date('May 12, 2025 00:00:00 GMT-0300').getTime();
+            const fireElement = document.getElementById('fire-element');
+            const fireText = document.getElementById('fire-text');
+            const maxDays = 60;
+            
+            function updateCountdown6() {
+                const now = new Date().getTime();
+                const diff = hotSaleDate6 - now;
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                
+                const fireHeight = 80 * (1 - Math.min(days, maxDays) / maxDays);
+                fireElement.style.height = `${fireHeight}px`;
+                fireText.textContent = days > 0 ? `Faltan ${days} días` : '¡Llegó el Hot Sale!';
+            }
+            
+            updateCountdown6();
+            setInterval(updateCountdown6, 1000);
+        </script>
+    </div>
+</body>
+</html>
