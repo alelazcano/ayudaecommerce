@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Demos - Análisis UX</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <div class="demo-selector">
+        <button class="demo-btn active" data-demo="bad">Mala Práctica</button>
+        <button class="demo-btn" data-demo="good">Buena Práctica</button>
+        <button class="demo-btn" data-demo="minimal">Minimalista</button>
+    </div>
+
+    <div class="container">
+        <!-- Checkout Malo -->
+        <form id="bad-checkout" class="checkout-form visible">
+            <h1>Finalizar Compra</h1>
+            <div class="form-section">
+                <h2>Datos Personales</h2>
+                <div class="form-group bad-group">
+                    <label for="bad-fullname">Nombre Completo (Ingrese su nombre y apellido como figura en su documento de identidad oficial emitido por el gobierno)</label>
+                    <input type="text" id="bad-fullname" placeholder="Ej: Juan Pérez González" required>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-email">Correo Electrónico (Debe ser un correo válido donde podamos enviarle información sobre su pedido)</label>
+                    <input type="text" id="bad-email" placeholder="Ej: juan.perez@correo.com" required>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-phone">Teléfono (Incluya código de área y no use guiones ni espacios)</label>
+                    <input type="text" id="bad-phone" placeholder="Ej: 549114567890" required>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-dni">DNI o Documento de Identidad (Solo números sin puntos ni guiones)</label>
+                    <input type="text" id="bad-dni" placeholder="Ej: 33456789" required>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-birthdate">Fecha de Nacimiento (DD/MM/AAAA)</label>
+                    <input type="text" id="bad-birthdate" placeholder="Ej: 15/05/1985" required>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-gender">Género (Seleccione una opción)</label>
+                    <select id="bad-gender" required>
+                        <option value="">Seleccione...</option>
+                        <option value="male">Masculino</option>
+                        <option value="female">Femenino</option>
+                        <option value="other">Otro</option>
+                        <option value="undefined">Prefiero no decirlo</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2>Datos de Envío</h2>
+                <div class="form-group bad-group">
+                    <label for="bad-address">Dirección Completa (Calle, número, piso, departamento, torre, manzana, lote y cualquier otro dato relevante)</label>
+                    <input type="text" id="bad-address" placeholder="Ej: Av. Corrientes 1234, Piso 5, Depto B" required>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-city">Ciudad o Localidad</label>
+                    <input type="text" id="bad-city" placeholder="Ej: Buenos Aires" required>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-province">Provincia o Estado</label>
+                    <input type="text" id="bad-province" placeholder="Ej: CABA" required>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-zip">Código Postal (Ingrese solo números)</label>
+                    <input type="text" id="bad-zip" placeholder="Ej: 1043" required>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-country">País</label>
+                    <select id="bad-country" required>
+                        <option value="">Seleccione...</option>
+                        <option value="AR">Argentina</option>
+                        <option value="BR">Brasil</option>
+                        <option value="CL">Chile</option>
+                        <option value="UY">Uruguay</option>
+                        <option value="PY">Paraguay</option>
+                        <option value="BO">Bolivia</option>
+                        <option value="PE">Perú</option>
+                        <option value="EC">Ecuador</option>
+                        <option value="CO">Colombia</option>
+                        <option value="VE">Venezuela</option>
+                        <option value="MX">México</option>
+                    </select>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-instructions">Instrucciones Especiales de Entrega (Si no está en su domicilio, indique dónde dejar el paquete)</label>
+                    <textarea id="bad-instructions" placeholder="Ej: Dejar con portero, llamar antes de entregar, etc." rows="3"></textarea>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2>Datos de Pago</h2>
+                <div class="form-group bad-group">
+                    <label for="bad-cardname">Nombre en la Tarjeta (Como aparece exactamente en la tarjeta de crédito/débito)</label>
+                    <input type="text" id="bad-cardname" placeholder="Ej: JUAN P PEREZ" required>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-cardnumber">Número de Tarjeta (Los 16 dígitos sin espacios)</label>
+                    <input type="text" id="bad-cardnumber" placeholder="Ej: 4111111111111111" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group bad-group">
+                        <label for="bad-expiry">Fecha de Expiración (MM/AA)</label>
+                        <input type="text" id="bad-expiry" placeholder="Ej: 12/25" required>
+                    </div>
+                    
+                    <div class="form-group bad-group">
+                        <label for="bad-cvv">CVV (Los 3 dígitos al dorso de la tarjeta)</label>
+                        <input type="text" id="bad-cvv" placeholder="Ej: 123" required>
+                    </div>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-cardtype">Tipo de Tarjeta</label>
+                    <select id="bad-cardtype" required>
+                        <option value="">Seleccione...</option>
+                        <option value="visa">Visa</option>
+                        <option value="mastercard">Mastercard</option>
+                        <option value="amex">American Express</option>
+                        <option value="other">Otra</option>
+                    </select>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-cuotas">Cuotas (Seleccione cantidad de cuotas)</label>
+                    <select id="bad-cuotas" required>
+                        <option value="">Seleccione...</option>
+                        <option value="1">1 cuota sin interés</option>
+                        <option value="3">3 cuotas con interés (5%)</option>
+                        <option value="6">6 cuotas con interés (10%)</option>
+                        <option value="12">12 cuotas con interés (20%)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2>Seguridad y Privacidad</h2>
+                <div class="form-group bad-group">
+                    <label for="bad-password">Cree una Contraseña (Mínimo 8 caracteres, incluyendo mayúsculas, números y símbolos)</label>
+                    <input type="text" id="bad-password" placeholder="Ingrese su contraseña aquí" required>
+                </div>
+                
+                <div class="form-group bad-group">
+                    <label for="bad-confirm">Confirme su Contraseña</label>
+                    <input type="text" id="bad-confirm" placeholder="Vuelva a ingresar su contraseña" required>
+                </div>
+                
+                <div class="form-group bad-group checkbox-group">
+                    <input type="checkbox" id="bad-terms" required>
+                    <label for="bad-terms">Acepto los Términos y Condiciones (Recomendamos leerlos detenidamente antes de aceptar)</label>
+                </div>
+                
+                <div class="form-group bad-group checkbox-group">
+                    <input type="checkbox" id="bad-newsletter">
+                    <label for="bad-newsletter">Deseo recibir ofertas y novedades por correo electrónico (Puede desactivarlo luego en su perfil)</label>
+                </div>
+                
+                <div class="form-group bad-group checkbox-group">
+                    <input type="checkbox" id="bad-partners">
+                    <label for="bad-partners">Autorizo a compartir mis datos con empresas asociadas para recibir ofertas personalizadas</label>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-btn bad-btn">Realizar Pago</button>
+        </form>
+
+        <!-- Checkout Bueno -->
+        <form id="good-checkout" class="checkout-form">
+            <h1>Finalizar Compra</h1>
+            
+            <div class="accordion active">
+                <div class="accordion-header">
+                    <span>1</span>
+                    <h2>Datos Personales</h2>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="form-group">
+                        <label for="good-fullname">Nombre Completo</label>
+                        <input type="text" id="good-fullname" placeholder="Ej: Juan Pérez" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="good-email">Correo Electrónico</label>
+                        <input type="email" id="good-email" placeholder="Ej: juan@correo.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="good-phone">Teléfono</label>
+                        <input type="tel" id="good-phone" placeholder="Ej: 114567890" required>
+                    </div>
+                    
+                    <button type="button" class="next-btn">Siguiente</button>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-header">
+                    <span>2</span>
+                    <h2>Datos de Envío</h2>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="form-group">
+                        <label for="good-address">Dirección</label>
+                        <input type="text" id="good-address" placeholder="Ej: Av. Corrientes 1234" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="good-city">Ciudad</label>
+                            <input type="text" id="good-city" placeholder="Ej: Buenos Aires" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="good-zip">Código Postal</label>
+                            <input type="text" id="good-zip" placeholder="Ej: 1043" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="good-country">País</label>
+                        <select id="good-country" required>
+                            <option value="">Seleccione...</option>
+                            <option value="AR">Argentina</option>
+                            <option value="BR">Brasil</option>
+                            <option value="CL">Chile</option>
+                            <option value="UY">Uruguay</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="good-instructions">Instrucciones de Entrega (Opcional)</label>
+                        <textarea id="good-instructions" placeholder="Ej: Dejar con portero" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <button type="button" class="prev-btn">Anterior</button>
+                        <button type="button" class="next-btn">Siguiente</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="accordion">
+                <div class="accordion-header">
+                    <span>3</span>
+                    <h2>Método de Pago</h2>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="payment-methods">
+                        <div class="payment-method active" data-method="card">
+                            <span>💳</span>
+                            <span>Tarjeta de Crédito/Débito</span>
+                        </div>
+                        <div class="payment-method" data-method="transfer">
+                            <span>🏦</span>
+                            <span>Transferencia Bancaria</span>
+                        </div>
+                        <div class="payment-method" data-method="cash">
+                            <span>💵</span>
+                            <span>Efectivo</span>
+                        </div>
+                    </div>
+                    
+                    <div id="card-payment" class="payment-details">
+                        <div class="form-group">
+                            <label for="good-cardnumber">Número de Tarjeta</label>
+                            <input type="text" id="good-cardnumber" placeholder="1234 5678 9012 3456" data-mask="0000 0000 0000 0000" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="good-expiry">Válida hasta</label>
+                                <input type="text" id="good-expiry" placeholder="MM/AA" data-mask="00/00" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="good-cvv">CVV</label>
+                                <input type="password" id="good-cvv" placeholder="123" data-mask="000" maxlength="3" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="good-cardname">Nombre en la Tarjeta</label>
+                            <input type="text" id="good-cardname" placeholder="JUAN P PEREZ" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="good-cuotas">Cuotas</label>
+                            <select id="good-cuotas" required>
+                                <option value="">Seleccione...</option>
+                                <option value="1">1 cuota sin interés</option>
+                                <option value="3">3 cuotas</option>
+                                <option value="6">6 cuotas</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="transfer-payment" class="payment-details" style="display:none;">
+                        <p>Realice una transferencia a nuestra cuenta bancaria. Le enviaremos los datos por email.</p>
+                    </div>
+                    
+                    <div id="cash-payment" class="payment-details" style="display:none;">
+                        <p>Pague en efectivo al recibir su pedido. Solo disponible para algunas zonas.</p>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="good-terms" required>
+                        <label for="good-terms">Acepto los Términos y Condiciones</label>
+                    </div>
+                    
+                    <div class="form-row">
+                        <button type="button" class="prev-btn">Anterior</button>
+                        <button type="submit" class="submit-btn">Realizar Pago</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Checkout Minimalista -->
+        <form id="minimal-checkout" class="checkout-form">
+            <div class="minimal-header">
+                <h1>Finalizar Compra</h1>
+                <p class="login-prompt">¿Ya tienes una cuenta? <a href="#" id="show-login">Inicia sesión</a> para completar más rápido.</p>
+            </div>
+            
+            <div id="login-form" class="minimal-section" style="display:none;">
+                <div class="form-group">
+                    <label for="minimal-email">Email</label>
+                    <input type="email" id="minimal-email" placeholder="tucorreo@ejemplo.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="minimal-password">Contraseña</label>
+                    <input type="password" id="minimal-password" placeholder="••••••••">
+                </div>
+                
+                <button type="button" class="minimal-btn" id="login-btn">Iniciar Sesión</button>
+                <p class="text-center">o</p>
+                <button type="button" class="minimal-btn secondary-btn" id="continue-guest">Continuar como invitado</button>
+            </div>
+            
+            <div id="guest-form" class="minimal-section">
+                <div class="form-step" data-step="1">
+                    <div class="form-group">
+                        <label for="minimal-email-guest">Email</label>
+                        <input type="email" id="minimal-email-guest" placeholder="tucorreo@ejemplo.com" required>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="minimal-btn next-step" data-next="2">Continuar</button>
+                    </div>
+                </div>
+                
+                <div class="form-step" data-step="2" style="display:none;">
+                    <div class="form-group">
+                        <label for="minimal-address">Dirección</label>
+                        <input type="text" id="minimal-address" placeholder="Calle y número" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="minimal-city">Ciudad</label>
+                            <input type="text" id="minimal-city" placeholder="Ciudad" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="minimal-zip">Código Postal</label>
+                            <input type="text" id="minimal-zip" placeholder="CP" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="minimal-btn secondary-btn prev-step" data-prev="1">Atrás</button>
+                        <button type="button" class="minimal-btn next-step" data-next="3">Continuar</button>
+                    </div>
+                </div>
+                
+                <div class="form-step" data-step="3" style="display:none;">
+                    <div class="payment-options">
+                        <div class="payment-option active" data-payment="card">
+                            <span>💳</span>
+                            <span>Tarjeta</span>
+                        </div>
+                        <div class="payment-option" data-payment="paypal">
+                            <span>🔵</span>
+                            <span>PayPal</span>
+                        </div>
+                    </div>
+                    
+                    <div id="minimal-card" class="payment-details">
+                        <div class="form-group">
+                            <label>Número de Tarjeta</label>
+                            <input type="text" placeholder="1234 5678 9012 3456" data-mask="0000 0000 0000 0000" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Válida hasta</label>
+                                <input type="text" placeholder="MM/AA" data-mask="00/00" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>CVV</label>
+                                <input type="password" placeholder="•••" data-mask="000" maxlength="3" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="minimal-paypal" class="payment-details" style="display:none;">
+                        <p>Serás redirigido a PayPal para completar tu pago.</p>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="minimal-btn secondary-btn prev-step" data-prev="2">Atrás</button>
+                        <button type="submit" class="minimal-btn">Pagar Ahora</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="minimal-footer">
+                <p>Tu información está protegida. No almacenamos datos de tarjetas.</p>
+            </div>
+        </form>
+    </div>
+
+    <div id="success-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>¡Compra Exitosa!</h2>
+            <p>Gracias por tu compra. Hemos enviado los detalles a tu correo electrónico.</p>
+            <button id="confetti-btn" class="modal-btn">Celebrar 🎉</button>
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
