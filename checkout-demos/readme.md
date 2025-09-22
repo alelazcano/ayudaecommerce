@@ -1,5 +1,7 @@
 ## Características de cada Demo
 
+[Ir a la demo](https://repodemos.lazcano.com.ar/checkout-demos/checkout-example-1.html)
+
 ### 1. Checkout Malo (Mala Práctica)
 
 - Formulario largo de una sola página
