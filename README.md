@@ -9,14 +9,14 @@ Ejemplos de evento de alto tráfico:
 - [cartel de cuenta regresiva](ecommerce-sample-code-snippets-example/countdown-event-example.html)
 - [diversos formatos de contadores regresivos](ecommerce-sample-code-snippets-example/countdown-evento.html)
 - [captura de atención animado](ecommerce-sample-code-snippets-example/countdown-hotsale.html)
-- https://github.com/alelazcano/ayudaecommerce/blob/master/ecommerce-sample-code-snippets-example/docs-ultraconversion-hotsalear2025.html
-- https://github.com/alelazcano/ayudaecommerce/blob/master/ecommerce-sample-code-snippets-example/example-components-ux-cro-darkpattern.html
-- https://github.com/alelazcano/ayudaecommerce/blob/master/ecommerce-sample-code-snippets-example/example-components-ux-cro-goodpractices.html
-- https://github.com/alelazcano/ayudaecommerce/blob/master/ecommerce-sample-code-snippets-example/example-components-ux-cro-goodpractices2.html
-- https://github.com/alelazcano/ayudaecommerce/blob/master/ecommerce-sample-code-snippets-example/example-components-ux-cro.html
-- https://github.com/alelazcano/ayudaecommerce/blob/master/ecommerce-sample-code-snippets-example/example-components.html
-- https://github.com/alelazcano/ayudaecommerce/blob/master/ecommerce-sample-code-snippets-example/progress-bar.html
-- https://github.com/alelazcano/ayudaecommerce/blob/master/ecommerce-sample-code-snippets-example/progress-roadmap.html
+- [demo link](ecommerce-sample-code-snippets-example/docs-ultraconversion-hotsalear2025.html)
+- [demo link](ecommerce-sample-code-snippets-example/example-components-ux-cro-darkpattern.html)
+- [demo link](ecommerce-sample-code-snippets-example/example-components-ux-cro-goodpractices.html)
+- [demo link](ecommerce-sample-code-snippets-example/example-components-ux-cro-goodpractices2.html)
+- [demo link](ecommerce-sample-code-snippets-example/example-components-ux-cro.html)
+- [demo link](ecommerce-sample-code-snippets-example/example-components.html)
+- [demo link](ecommerce-sample-code-snippets-example/progress-bar.html)
+- [demo link](ecommerce-sample-code-snippets-example/progress-roadmap.html)
 - 
 
 > [!NOTE]  
