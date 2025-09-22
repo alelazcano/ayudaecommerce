@@ -40,5 +40,7 @@ Revisa más abajo el enlace para ver la demo, luego de leer toda la página.
 3. Al hacer clic en "Realizar Pago" se muestra un modal de éxito
 4. El botón "Celebrar" en el modal activa los confetis
 
+> [!TIP]
+> Prueba el checkout, todos sus recorridos y opciones. Los datos no se guardan ni envían a ningun lado.
 
 by [Ale Lazcano](https://lazcano.com.ar), con ayuda de la IA.
