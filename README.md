@@ -1,4 +1,4 @@
-# REPO Ayuda E-commerce ()
+# REPO Ayuda E-commerce ([by Ale Lazcano](https://lazcano.com.ar/ayudaecommerce))
 
 <base href="https://repodemos.lazcano.com.ar/" target="_blank">
 
