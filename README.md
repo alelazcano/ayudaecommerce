@@ -1,6 +1,12 @@
-# REPO Ayuda E-commerce ([Ale Lazcano](https://lazcano.com.ar))
+# REPO Ayuda E-commerce ()
 
-Fundamento y objetivo: 
+<base href="https://repodemos.lazcano.com.ar/" target="_blank">
+
+checkout-demos
+- [ejemplo de cuenta regresiva](ecommerce-sample-code-snippets-example/countdown-event-example.html)
+
+
+<!-- Fundamento y objetivo: 
 
 Esto fue en principio (2019) una web, luego se transformó en un blog (2020), un lugar donde compartir conocimiento, ideas, opiniones, información y camaradería en el e-commerce. El tiempo pasó, se cerró, y se reformuló ahora en otro formato de proyecto.
 
@@ -12,5 +18,5 @@ Algunas ideas, código, ejemplos, módulos, plugins y más, para compartirlos en
 
 ¿Deseas añadir información? Pídelo, podemos integrar siempre que sea información útil, relacionada y desees dejarla totalmente accesible al público. Revisa más sobre [Ayuda E-commerce (by Ale Lazcano)](https://lazcano.com.ar/ayudaecommerce) en mi blog.
 
---
+-->
 
