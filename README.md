@@ -23,7 +23,7 @@
 - [Barras de progreso complejas](ecommerce-sample-code-snippets-example/progress-roadmap.html)
 
 > [!TIP]
-> Podés acceder al [repositorio completo en Github](https://github.com/alelazcano/ayudaecommerce). <b>Adáptalos y pruébalos en un entorno de desarrollo antes de usarlo en tu tienda o página web.</b>
+> Podés acceder al [repositorio completo en Github](https://github.com/alelazcano/ayudaecommerce) o la [versión web amigable](https://repodemos.lazcano.com.ar/) de las demos. Se ofrecen tal y como están, sin soporte: <b>adáptalos y pruébalos en un entorno de desarrollo antes de usarlo en tu tienda o página web.</b>
 
 > [!IMPORTANT]
 > Muchos códigos fueron elaborados a lo largo de los años, programados e implementados en decena de proyectos. La última versión se refactorizó y, en algunos casos, se realizó simplificación y pequeñas correcciones de estilo con apoyo de la IA. 
