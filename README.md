@@ -22,8 +22,12 @@
 - [Varias barras de progreso simples y visuales](ecommerce-sample-code-snippets-example/progress-bar.html)
 - [Barras de progreso complejas](ecommerce-sample-code-snippets-example/progress-roadmap.html)
 
-> [!TIP]
-> Podés acceder al [repositorio completo en Github](https://github.com/alelazcano/ayudaecommerce) o la [versión web amigable](https://repodemos.lazcano.com.ar/) de las demos. Se ofrecen tal y como están, sin soporte: <b>adáptalos y pruébalos en un entorno de desarrollo antes de usarlo en tu tienda o página web.</b>
+---
 
-> [!IMPORTANT]
-> Muchos códigos fueron elaborados a lo largo de los años, programados e implementados en decena de proyectos. La última versión se refactorizó y, en algunos casos, se realizó simplificación y pequeñas correcciones de estilo con apoyo de la IA. 
+<img width="83" height="50" alt="image" src="https://github.com/user-attachments/assets/188f2d93-55cc-4e0c-905b-4a08c9249788" />
+
+Podés acceder al [repositorio completo en Github](https://github.com/alelazcano/ayudaecommerce) o la [versión web amigable](https://repodemos.lazcano.com.ar/) de las demos. Se ofrecen tal y como están, sin soporte: <b>adáptalos y pruébalos en un entorno de desarrollo antes de usarlo en tu tienda o página web.</b>
+
+<img width="143" height="50" alt="image" src="https://github.com/user-attachments/assets/0a82c778-5b91-42ef-a4d1-d5d567012aeb" />
+
+Muchos códigos fueron elaborados a lo largo de los años, programados e implementados en decena de proyectos. La última versión se refactorizó y, en algunos casos, se realizó simplificación y pequeñas correcciones de estilo con apoyo de la IA. 
