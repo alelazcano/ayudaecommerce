@@ -27,27 +27,3 @@
 
 > [!IMPORTANT]
 > Muchos códigos fueron elaborados a lo largo de los años, programados e implementados en decena de proyectos. La última versión se refactorizó y, en algunos casos, se realizó simplificación y pequeñas correcciones de estilo con apoyo de la IA. 
-
-<div class="hidden">
-
-> [!NOTE]  
-> Highlights information that users should take into account, even when skimming.
-
-> [!TIP]
-> Optional information to help a user be more successful.
-
-> [!IMPORTANT]  
-> Crucial information necessary for users to succeed.
-
-> [!WARNING]  
-> Critical content demanding immediate user attention due to potential risks.
-
-> [!CAUTION]
-> Negative potential consequences of an action.
-
-</div>
-
-<style>
-  .hidden {}
-  vidsibility: hidden;
-</style>
